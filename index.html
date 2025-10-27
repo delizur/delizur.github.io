@@ -89,9 +89,12 @@
 
   <main id="content">
     <section id="hero" class="hero">
-      <div class="card">
-        <p class="kicker">Hello, I'm</p>
-        <h1>Danny Elizur</h1>
+      <div class="card" style="grid-column:1 / -1">
+          <div class="headshot-wrap" style="align-items:center;text-align:center">
+            <img class="headshot" src="/assets/Headshot_cropped.jpg" alt="Danny Elizur headshot"/>
+            <p class="kicker">Hello, I'm</p>
+            <h1 style="margin:0">Danny Elizur</h1>
+          </div>
         <p>Third year Engineering Physics Student at UBC, interested in electronics, mechanical design, machine learning, and embedded programming</p>
         <div class="row" style="margin-top:14px">
           <a class="btn" href="#projects">View Projects</a>
@@ -102,13 +105,7 @@
           <span class="tag">JavaScript</span><span class="tag">TypeScript</span><span class="tag">Python</span><span class="tag">React</span><span class="tag">Node</span>
         </div>
       </div>
-      <div class="card">
-        <h2 style="margin-top:0">Headshot</h2>
-        <div class="headshot-wrap" aria-label="Headshot">
-          <img class="headshot" src="/assets/Headshot.jpg" alt="Danny Elizur headshot" />
-          <p class="muted" style="margin:6px 0 0;font-size:14px">Place your photo at <code>/assets/Headshot.jpg</code> or update the <code>src</code> to point to your image.</p>
-        </div>
-      </div>
+      
     </section>
 
     <section id="about">
