@@ -17,12 +17,12 @@
   <link rel="icon" href="/assets/favicon.png" />
   <style>
     :root{
-      --bg:#0b1016; --panel:#0f172a; --text:#e5e7eb; --muted:#94a3b8; --brand:#38bdf8; --accent:#c084fc; --ring:#22d3ee;
-      --bg-light:#ffffff; --panel-light:#f8fafc; --text-light:#0f172a; --muted-light:#475569;
+      --bg:#0b1016; --panel:#0f172a; --text:#e5e7eb; --muted:#cbd5e1; --brand:#38bdf8; --accent:#c084fc; --ring:#22d3ee;
+      --bg-light:#ffffff; --panel-light:#f8fafc; --text-light:#0f172a; --muted-light:#334155;
       --radius:16px; --shadow:0 10px 30px rgba(2,8,23,.35); --maxw:1000px;
     }
     html{scroll-behavior:smooth}
-    body{margin:0;font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Noto Sans, Apple Color Emoji, Segoe UI Emoji; line-height:1.6; background:var(--bg); color:var(--text)}
+  body{margin:0;font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Noto Sans, Apple Color Emoji, Segoe UI Emoji; line-height:1.6; background:var(--bg); color:var(--text); font-size:17px}
     .light body{background:var(--bg-light); color:var(--text-light)}
     header{position:sticky;top:0;backdrop-filter:saturate(180%) blur(8px); background:color-mix(in oklab, var(--panel) 80%, transparent); border-bottom:1px solid rgba(148,163,184,.15); z-index:50}
     .light header{background:color-mix(in oklab, var(--panel-light) 80%, transparent);}
@@ -67,8 +67,8 @@
     .pill{display:inline-flex;gap:6px;align-items:center;padding:6px 10px;border:1px solid rgba(148,163,184,.24);border-radius:999px}
     /* Headshot styles */
     .headshot-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding-top:6px}
-    .headshot{width:160px;height:160px;border-radius:999px;object-fit:cover;border:4px solid rgba(148,163,184,.12);box-shadow:0 8px 24px rgba(2,8,23,.35)}
-    @media (max-width:600px){.headshot{width:120px;height:120px}}
+    .headshot{width:220px;height:220px;border-radius:999px;object-fit:cover;border:5px solid rgba(148,163,184,.12);box-shadow:0 8px 24px rgba(2,8,23,.35)}
+    @media (max-width:600px){.headshot{width:160px;height:160px}}
   </style>
 </head>
 <body>
@@ -92,7 +92,6 @@
       <div class="card" style="grid-column:1 / -1">
           <div class="headshot-wrap" style="align-items:center;text-align:center">
             <img class="headshot" src="/assets/Headshot_cropped.jpg" alt="Danny Elizur headshot"/>
-            <p class="kicker">Hello, I'm</p>
             <h1 style="margin:0">Danny Elizur</h1>
           </div>
         <p>Third year Engineering Physics Student at UBC, interested in electronics, mechanical design, machine learning, and embedded programming</p>
