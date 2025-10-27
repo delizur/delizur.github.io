@@ -75,8 +75,8 @@
     .project h3{margin:12px 0 6px}
     .project p{color:var(--muted);margin:0 0 10px}
   .meta{font-size:13px;color:var(--muted)}
-  /* Read more link style */
-  .read-more{display:block;margin-top:10px;font-size:1.05rem;font-weight:700;color:#000;text-decoration:none}
+  /* Read more link style (theme-aware: light text in dark mode, dark text in light mode) */
+  .read-more{display:block;margin-top:10px;font-size:1.05rem;font-weight:700;color:var(--text);text-decoration:none;transition:color .12s}
   .read-more:focus,.read-more:hover{text-decoration:underline}
 
     .list li{margin:8px 0}
