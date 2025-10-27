@@ -1,0 +1,54 @@
+[
+  {
+    "slug": "autonomous-robot",
+    "title": "Autonomous Robot",
+    "subtitle": "Competition robot — navigation & control",
+    "description": "Designed and built a fully autonomous robot as part of a competition course.",
+    "images": [
+      "/assets/projects/autonomous-robot-1.jpg",
+      "/assets/projects/autonomous-robot-2.jpg",
+      "/assets/projects/autonomous-robot-3.jpg"
+    ],
+    "github": "https://github.com/delizur/project-one",
+    "demo": "",
+    "tags": ["Onshape CAD", "Circuit Design", "ESP32"]
+  },
+  {
+    "slug": "guitar-project",
+    "title": "Guitar Project",
+    "subtitle": "Handmade electric guitar",
+    "description": "Built a functional electric guitar from scratch using CNC and hand tools.",
+    "images": [
+      "/assets/projects/guitar-project-1.jpg",
+      "/assets/projects/guitar-project-2.jpg"
+    ],
+    "github": "https://github.com/delizur/project-two",
+    "demo": "",
+    "tags": ["CNC", "Woodworking"]
+  },
+  {
+    "slug": "machine-learning-robot",
+    "title": "Machine Learning Robot",
+    "subtitle": "Simulated training with computer vision",
+    "description": "Training a robot in simulation using computer vision and ML techniques.",
+    "images": [
+      "/assets/projects/machine-learning-robot-1.jpg"
+    ],
+    "github": "https://github.com/delizur/project-three",
+    "demo": "",
+    "tags": ["ROS", "TensorFlow", "Python"]
+  },
+  {
+    "slug": "oasys-project",
+    "title": "OASYS Project",
+    "subtitle": "Levelling system for a lunar greenhouse",
+    "description": "Working with the Canadian Space Agency on a levelling system for the OASYS Lunar Greenhouse.",
+    "images": [
+      "/assets/projects/oasys-project-1.jpg",
+      "/assets/projects/oasys-project-2.jpg"
+    ],
+    "github": "https://github.com/delizur/project-four",
+    "demo": "",
+    "tags": ["Machine Design", "FEA", "CAD"]
+  }
+]

@@ -65,17 +65,22 @@
     .kicker{letter-spacing:.2em;text-transform:uppercase;font-size:12px;color:var(--muted)}
     .muted{color:var(--muted)}
     .pill{display:inline-flex;gap:6px;align-items:center;padding:6px 10px;border:1px solid rgba(148,163,184,.24);border-radius:999px}
+    /* Headshot styles */
+    .headshot-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding-top:6px}
+    .headshot{width:160px;height:160px;border-radius:999px;object-fit:cover;border:4px solid rgba(148,163,184,.12);box-shadow:0 8px 24px rgba(2,8,23,.35)}
+    @media (max-width:600px){.headshot{width:120px;height:120px}}
   </style>
 </head>
 <body>
   <a class="sr-only" href="#content">Skip to content</a>
   <header>
     <nav class="nav" aria-label="Primary">
-      <div class="brand"><span class="dot" aria-hidden="true"></span> <span>[[Your Name]]</span></div>
+      <div class="brand"><span class="dot" aria-hidden="true"></span> <span>Danny Elizur</span></div>
       <div class="row">
         <a href="#about">About</a>
         <a href="#projects">Projects</a>
         <a href="#experience">Experience</a>
+        <a href="#education">Education</a>
         <a href="#contact">Contact</a>
         <button id="theme" class="btn" aria-label="Toggle theme"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.41 1.41M16.95 16.95l1.41 1.41M5.64 18.36l1.41-1.41M16.95 7.05l1.41-1.41"/><circle cx="12" cy="12" r="5"/></svg>Theme</button>
       </div>
@@ -98,13 +103,11 @@
         </div>
       </div>
       <div class="card">
-        <h2 style="margin-top:0">Quick Facts</h2>
-        <ul class="list">
-          <li>Based in [[City, Country]].</li>
-          <li>Currently: [[Role or "open to opportunities"]].</li>
-          <li>Interested in [[interests]].</li>
-          <li><a href="#resume">Résumé</a></li>
-        </ul>
+        <h2 style="margin-top:0">Headshot</h2>
+        <div class="headshot-wrap" aria-label="Headshot">
+          <img class="headshot" src="/assets/Headshot.jpg" alt="Danny Elizur headshot" />
+          <p class="muted" style="margin:6px 0 0;font-size:14px">Place your photo at <code>/assets/Headshot.jpg</code> or update the <code>src</code> to point to your image.</p>
+        </div>
       </div>
     </section>
 
@@ -118,31 +121,73 @@
     <section id="projects">
       <h2>Projects</h2>
       <div class="grid">
-        <!-- Project 1 -->
+        <!-- Autonomous Robot -->
         <article class="col-6 card project">
-          <a class="thumb" href="https://github.com/delizur/project-one" target="_blank" rel="noopener" aria-label="Open Project One on GitHub">
-            <!-- Replace with screenshot -->
-            <svg width="100%" height="100%" viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice"><rect width="400" height="225" fill="#07111b"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#8ab4f8" font-family="monospace" font-size="18">Project One Screenshot</text></svg>
+          <a class="thumb" href="/projects/autonomous-robot/" aria-label="Open Autonomous Robot page">
+            <!-- Replace with screenshot at /assets/projects/autonomous-robot.jpg -->
+            <img src="/assets/projects/autonomous-robot.jpg" alt="Autonomous Robot screenshot" />
           </a>
-          <h3>Project One</h3>
-          <p>1–2 sentence summary of what it is, who it’s for, and what you built.</p>
-          <div class="meta">Tech: [[React, Node, PostgreSQL]] · <a href="https://project-one-demo.example" target="_blank" rel="noopener">Live demo</a></div>
+          <h3>Autonomous Robot</h3>
+          <p>Designed and built a fully autonomous robot as part of a competition course.</p>
+          <div>
+          <span class="tag">Onshape CAD</span><span class="tag">Circuit Design</span><span class="tag">O-Scope Debugging</span><span class="tag">Soldering</span><span class="tag">ESP32</span>
+        </div>
+          <div class="meta">Tech: [[React, Node, PostgreSQL]] · <a href="/projects/autonomous-robot/">Details</a></div>
         </article>
-        <!-- Project 2 -->
+        <!-- Guitar Project -->
         <article class="col-6 card project">
-          <a class="thumb" href="https://github.com/delizur/project-two" target="_blank" rel="noopener" aria-label="Open Project Two on GitHub">
-            <svg width="100%" height="100%" viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice"><rect width="400" height="225" fill="#0a1622"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#a78bfa" font-family="monospace" font-size="18">Project Two Screenshot</text></svg>
+          <a class="thumb" href="/projects/guitar-project/" aria-label="Open Guitar Project page">
+            <!-- Replace with screenshot at /assets/projects/guitar-project.jpg -->
+            <img src="/assets/projects/guitar-project.jpg" alt="Guitar Project screenshot" />
           </a>
-          <h3>Project Two</h3>
-          <p>What problem does it solve? Your role? Any impact (stars, users)?</p>
-          <div class="meta">Tech: [[TypeScript, AWS, DynamoDB]] · <a href="https://project-two-demo.example" target="_blank" rel="noopener">Live demo</a></div>
+          <h3>Guitar Project</h3>
+          <p>Built a (functional!) electric guitar from scratch, using a wood CNC and hand tools.</p>
+          <div class="meta">Tech: [[TypeScript, AWS, DynamoDB]] · <a href="/projects/guitar-project/">Details</a></div>
+          <div>
+          <span class="tag">CNC</span><span class="tag">Engineering Drawings</span><span class="tag">Machine Debugging</span>
+        </div>
         </article>
-        <!-- Add more projects as needed -->
+        <!-- Machine Learning Robot -->
+        <article class="col-6 card project">
+          <a class="thumb" href="/projects/machine-learning-robot/" aria-label="Open Machine Learning Robot page">
+            <!-- Replace with screenshot at /assets/projects/machine-learning-robot.jpg -->
+            <img src="/assets/projects/machine-learning-robot.jpg" alt="Machine Learning Robot screenshot" />
+          </a>
+          <h3>Machine Learning Robot</h3>
+          <p>Currently working on a machine learning competition course, where a robot is trained in a simulated Gazebo environment making use of computer vision and modern machine learning techniques.</p>
+          <div class="meta">Tech: [[Python, TensorFlow, Scikit-Learn]] · <a href="/projects/machine-learning-robot/">Details</a></div>
+          <div>
+          <span class="tag">ROS</span><span class="tag">Linux Terminal</span><span class="tag">Machine Learning</span><span class="tag">Neural Networks</span><span class="tag">Python</span>
+        </div>
+        </article>
+        <!-- OASYS Project -->
+        <article class="col-6 card project">
+          <a class="thumb" href="/projects/oasys-project/" aria-label="Open OASYS Project page">
+            <!-- Replace with screenshot at /assets/projects/oasys-project.jpg -->
+            <img src="/assets/projects/oasys-project.jpg" alt="OASYS Project screenshot" />
+          </a>
+          <h3>OASYS Project</h3>
+          <p>Currently working alongside the Canadian Space Agency to develop a levelling system for the OASYS Lunar Greenhouse, a proposed design for sustainable food production on the moon.</p>
+          <div class="meta">Tech: [[Python, TensorFlow, Scikit-Learn]] · <a href="/projects/oasys-project/">Details</a></div>
+          <div>
+          <span class="tag">Machine Design</span><span class="tag">Solid Mechanics</span><span class="tag">FEA</span><span class="tag">CAD</span>
+        </div>
+        </article>
       </div>
     </section>
 
     <section id="experience">
       <h2>Experience</h2>
+      <div class="card">
+        <ul class="list">
+          <li><strong>Canmora Tech</strong> — Electrical-Mechanical Engineering Intern (Jan 2024 - Apr 2024)<br><span class="muted">One‑line impact statement. Add a bullet or two of measurable results.</span></li>
+          <li><strong>Vancouver Water Adventures</strong> — Kayak, Paddleboard, and Jet Ski Tour Guide (Aug 2020 - Aug 2024)<br><span class="muted">Focus on outcomes, not duties. Mention tools used.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="education">
+      <h2>Education</h2>
       <div class="card">
         <ul class="list">
           <li><strong>[[Company]]</strong> — [[Title]] ([[Year–Year]])<br><span class="muted">One‑line impact statement. Add a bullet or two of measurable results.</span></li>
