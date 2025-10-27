@@ -1,29 +1,63 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Guitar Project · Danny Elizur</title>
+  <meta name="description" content="Built a functional electric guitar from scratch using CNC and hand tools.">
   <link rel="icon" href="/assets/favicon.png" />
   <style>
-    body{font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial;background:#0b1016;color:#e5e7eb;margin:0;padding:24px}
-    a{color:#60a5fa}
-    .card{background:#0f172a;border-radius:12px;padding:20px;max-width:900px;margin:24px auto;border:1px solid rgba(148,163,184,.08)}
-    img{max-width:100%;height:auto;border-radius:12px;display:block}
-    .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    :root{--bg:#0b1016;--panel:#0f172a;--text:#e5e7eb;--muted:#94a3b8}
+    body{margin:0;font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text)}
+    header{background:color-mix(in oklab,var(--panel) 80%,transparent);padding:12px 16px}
+    .nav{max-width:1000px;margin:auto;display:flex;align-items:center;justify-content:space-between}
+    .nav a{color:inherit;text-decoration:none;margin-left:10px}
+    main{max-width:1000px;margin:24px auto;padding:24px}
+    .card{background:color-mix(in oklab,var(--panel) 75%,transparent);border-radius:12px;padding:20px;border:1px solid rgba(148,163,184,.06)}
+    .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:12px 0}
+    img{max-width:100%;height:auto;border-radius:10px;display:block}
+    footer{max-width:1000px;margin:40px auto;color:var(--muted);padding:0 24px}
+    .tags{margin:10px 0}
+    .tag{display:inline-block;background:rgba(255,255,255,0.03);padding:6px 10px;border-radius:999px;margin-right:8px;color:#9aaebf}
+    @media (max-width:700px){.gallery{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Guitar Project</h1>
-    <p class="muted">Built a (functional!) electric guitar from scratch, using a wood CNC and hand tools.</p>
-    <img src="/assets/projects/guitar-project.jpg" alt="Guitar Project screenshot" />
-    <p>Short project summary: materials, fabrication steps, electronics, and any notable results. Replace with your writeup.</p>
-    <div class="row">
-      <a href="/">← Back to home</a>
-      <a href="https://github.com/delizur/project-two" target="_blank" rel="noopener">View on GitHub</a>
-      <a href="https://project-two-demo.example" target="_blank" rel="noopener">Live demo</a>
-    </div>
-  </div>
+  <header>
+    <nav class="nav">
+      <div><strong>Danny Elizur</strong></div>
+      <div>
+        <a href="/">Home</a>
+        <a href="/#projects">Projects</a>
+        <a href="/#about">About</a>
+        <a href="/#contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <article class="card">
+      <h1>Guitar Project</h1>
+      <p style="color:var(--muted);margin-top:6px">Handmade electric guitar</p>
+      <div class="tags"><span class="tag">CNC</span><span class="tag">Woodworking</span></div>
+
+      <div class="gallery">
+        <img src="/assets/projects/guitar-project-1.jpg" alt="Guitar - 1">
+        <img src="/assets/projects/guitar-project-2.jpg" alt="Guitar - 2">
+      </div>
+
+      <p style="color:#cbd5e1">Short project summary: materials, fabrication steps, electronics, and notable results.</p>
+
+      <div style="margin-top:12px">
+        <a href="/">← Back to home</a>
+        <a style="margin-left:12px" href="https://github.com/delizur/project-two" target="_blank" rel="noopener">View on GitHub</a>
+      </div>
+    </article>
+  </main>
+
+  <footer>
+    <div style="text-align:center;padding:16px;color:var(--muted)">© <span id="year">2025</span> Danny Elizur</div>
+  </footer>
+  <script>document.getElementById('year').textContent=new Date().getFullYear()</script>
 </body>
 </html>
