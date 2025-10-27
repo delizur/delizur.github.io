@@ -21,7 +21,11 @@
       --bg-light:#ffffff; --panel-light:#f8fafc; --text-light:#0f172a; --muted-light:#334155;
       --radius:16px; --shadow:0 10px 30px rgba(2,8,23,.35); --maxw:1000px;
     }
-    html{scroll-behavior:smooth}
+      /* Tip: change --accent to adjust the 'pink' highlight used by contact pills and (now) top icons.
+         You can also increase the contrast by using a brighter color value here. */
+  html{scroll-behavior:smooth}
+  /* When the root has the 'light' class, swap variable values so uses of --muted pick the light-mode contrast. */
+  .light{ --muted: var(--muted-light); --panel: var(--panel-light); --text: var(--text-light); }
   body{margin:0;font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Noto Sans, Apple Color Emoji, Segoe UI Emoji; line-height:1.6; background:var(--bg); color:var(--text); font-size:17px}
     .light body{background:var(--bg-light); color:var(--text-light)}
     header{position:sticky;top:0;backdrop-filter:saturate(180%) blur(8px); background:color-mix(in oklab, var(--panel) 80%, transparent); border-bottom:1px solid rgba(148,163,184,.15); z-index:50}
@@ -30,6 +34,13 @@
     .brand{display:flex;gap:10px;align-items:center;font-weight:700;letter-spacing:.3px}
     .brand .dot{width:10px;height:10px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--accent));box-shadow:0 0 0 3px color-mix(in oklab, var(--brand) 30%, transparent)}
     .nav a{color:inherit;text-decoration:none;padding:8px 10px;border-radius:10px}
+  /* Icon sizing and rendering improvements to avoid clipping */
+  .nav .icon, .pill .icon, svg.icon{width:18px;height:18px;display:inline-block;vertical-align:middle;overflow:visible}
+  svg.icon, .nav svg, .pill svg{overflow:visible}
+  .nav, .pill, .btn{overflow:visible;line-height:1;display:flex;align-items:center}
+  .pill svg, .btn svg{display:block}
+  /* Prevent stroke scaling artifacts that can visually cut lines off */
+  svg.icon *{vector-effect:non-scaling-stroke}
     .nav a:hover{outline:1px dashed color-mix(in oklab, var(--brand) 40%, transparent)}
     .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--accent));color:#06131c;font-weight:700;border:none;cursor:pointer}
     .btn:focus{outline:3px solid var(--ring)}
@@ -37,10 +48,17 @@
     section{margin:60px 0}
 
     .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center}
-    .card{background:color-mix(in oklab, var(--panel) 75%, transparent); border:1px solid rgba(148,163,184,.12); border-radius:var(--radius); box-shadow:var(--shadow); padding:24px}
+  .card{background:color-mix(in oklab, var(--panel) 75%, transparent); border:1px solid rgba(148,163,184,.12); border-radius:var(--radius); box-shadow:var(--shadow); padding:24px; overflow:visible}
     .light .card{background:var(--panel-light); border-color:#e2e8f0}
     .hero h1{font-size:clamp(28px,4vw,44px);line-height:1.15;margin:0 0 8px}
-    .hero p{color:var(--muted);margin-top:8px}
+    h2 {
+  font-size: clamp(28px, 2.4vw, 36px); /* responsive size: min 28px, fluid, max 36px */
+  line-height: 1.2;
+  margin: 0 0 12px;
+  font-weight: 700;
+  color: var(--text); /* optional: uses your theme color */
+}
+  .hero p{color:var(--muted);margin-top:8px;font-size:1.05rem;font-weight:500}
     .tag{display:inline-block;font-size:12px;padding:4px 10px;border-radius:999px;border:1px solid rgba(148,163,184,.24);margin:8px 6px 0 0}
 
     .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
@@ -50,10 +68,16 @@
     @media (max-width:900px){.hero{grid-template-columns:1fr}.col-6{grid-column:span 12}.col-4{grid-column:span 12}}
 
     .project{display:flex;flex-direction:column;height:100%}
-    .project .thumb{aspect-ratio:16/9;border-radius:14px;background:#0a1622;display:grid;place-items:center;border:1px solid rgba(148,163,184,.18);overflow:hidden}
+  .project{display:flex;flex-direction:column;height:100%}
+  .project .thumb{aspect-ratio:16/9;border-radius:14px;background:#0a1622;display:grid;place-items:center;border:1px solid rgba(148,163,184,.18);overflow:hidden}
+  /* ensure homepage thumbnails show the whole image and center it */
+  .project .thumb img{width:100%;height:100%;object-fit:contain;object-position:center;display:block}
     .project h3{margin:12px 0 6px}
     .project p{color:var(--muted);margin:0 0 10px}
-    .meta{font-size:13px;color:var(--muted)}
+  .meta{font-size:13px;color:var(--muted)}
+  /* Read more link style */
+  .read-more{display:block;margin-top:10px;font-size:1.05rem;font-weight:700;color:#000;text-decoration:none}
+  .read-more:focus,.read-more:hover{text-decoration:underline}
 
     .list li{margin:8px 0}
 
@@ -61,10 +85,36 @@
     .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(148,163,184,.25),transparent);margin:40px 0}
     .sr-only{position:absolute;clip:rect(1px,1px,1px,1px);padding:0;border:0;height:1px;width:1px;overflow:hidden}
     .icon{width:18px;height:18px;display:inline-block}
-    .row{display:flex;gap:10px;flex-wrap:wrap}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
     .kicker{letter-spacing:.2em;text-transform:uppercase;font-size:12px;color:var(--muted)}
     .muted{color:var(--muted)}
-    .pill{display:inline-flex;gap:6px;align-items:center;padding:6px 10px;border:1px solid rgba(148,163,184,.24);border-radius:999px}
+  /* Ensure hero pills have enough vertical space so SVG strokes are not clipped */
+  .pill{display:inline-flex;gap:6px;align-items:center;justify-content:center;min-height:40px;padding:8px 10px;border:1px solid rgba(148,163,184,.24);border-radius:999px}
+  .pill svg{display:block;width:20px;height:20px}
+  /* Nudge top-row pills slightly to avoid any sub-pixel clipping in some browsers */
+  .row .pill svg{transform:translateY(1px)}
+  /* Top icon buttons: remove pill outline for hero icons and make icons a bit larger/clickable */
+  .icon-btn{display:inline-flex;align-items:center;justify-content:center;padding:6px;border:0;background:transparent;min-height:0;cursor:pointer;transition:color .12s,transform .12s}
+  /* Inline SVG icons use currentColor so stroke/fill follow the link color. Use a per-icon scale variable to visually match differing aspect ratios. */
+  .icon-img{width:36px;height:36px;display:block;transition:transform .12s,opacity .12s;color:inherit;--icon-scale:1}
+  /* apply the per-icon scale and vertical nudge */
+  .row .icon-btn .icon-img,
+  .pill .icon-img{transform:translateY(.5px) scale(var(--icon-scale));transform-origin:center}
+  /* On hover/focus, nudge up but keep the per-icon scale */
+  .icon-btn:hover .icon-img, .icon-btn:focus .icon-img,
+  .pill:hover .icon-img, .pill:focus .icon-img{transform:translateY(-2px) scale(var(--icon-scale))}
+  /* Hover/focus states: top icons use brand color; contact pills use purple accent on hover */
+  .icon-btn{color:var(--muted)}
+  /* make top icons use the same pink/purple accent as the contact pills; change --accent in :root to tune the color */
+  .icon-btn:hover, .icon-btn:focus{ color:var(--accent); }
+  .pill{color:var(--muted)}
+  .pill:hover, .pill:focus{ color:var(--accent); }
+  .icon-btn:focus, .pill:focus{outline:3px solid color-mix(in oklab,var(--muted) 20%, transparent); outline-offset:4px}
+  /* per-icon visual tuning (fine-tune scale per artwork) */
+  .icon-email{--icon-scale:1.1}
+  .icon-linkedin{--icon-scale:0.82}
+  .icon-github{--icon-scale:1.1}
+  .headshot-wrap{overflow:visible}
     /* Headshot styles */
     .headshot-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding-top:6px}
     .headshot{width:220px;height:220px;border-radius:999px;object-fit:cover;border:5px solid rgba(148,163,184,.12);box-shadow:0 8px 24px rgba(2,8,23,.35)}
@@ -75,14 +125,14 @@
   <a class="sr-only" href="#content">Skip to content</a>
   <header>
     <nav class="nav" aria-label="Primary">
-      <div class="brand"><span class="dot" aria-hidden="true"></span> <span>Danny Elizur</span></div>
+      <a class="brand" href="/"><span class="dot" aria-hidden="true"></span> <span>Danny Elizur</span></a>
       <div class="row">
         <a href="#about">About</a>
         <a href="#projects">Projects</a>
         <a href="#experience">Experience</a>
         <a href="#education">Education</a>
         <a href="#contact">Contact</a>
-        <button id="theme" class="btn" aria-label="Toggle theme"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.41 1.41M16.95 16.95l1.41 1.41M5.64 18.36l1.41-1.41M16.95 7.05l1.41-1.41"/><circle cx="12" cy="12" r="5"/></svg>Theme</button>
+  <button id="theme" class="btn" aria-label="Toggle theme"><svg class="icon" viewBox="-2 -2 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.41 1.41M16.95 16.95l1.41 1.41M5.64 18.36l1.41-1.41M16.95 7.05l1.41-1.41"/><circle cx="12" cy="12" r="5"/></svg>Theme</button>
       </div>
     </nav>
   </header>
@@ -91,17 +141,35 @@
     <section id="hero" class="hero">
       <div class="card" style="grid-column:1 / -1">
           <div class="headshot-wrap" style="align-items:center;text-align:center">
-            <img class="headshot" src="/assets/Headshot_cropped.jpg" alt="Danny Elizur headshot"/>
+            <img class="headshot" src="/assets/Headshot_cropped.jpg" alt="Danny Elizur headshot" />
             <h1 style="margin:0">Danny Elizur</h1>
           </div>
         <p>Third year Engineering Physics Student at UBC, interested in electronics, mechanical design, machine learning, and embedded programming</p>
-        <div class="row" style="margin-top:14px">
-          <a class="btn" href="#projects">View Projects</a>
-          <a class="pill" href="https://www.linkedin.com/in/danny-elizur/" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.5 8h4V23h-4zM8.5 8h3.8v2.04h.06c.53-1 1.82-2.04 3.75-2.04 4.01 0 4.75 2.64 4.75 6.07V23h-4v-6.7c0-1.6-.03-3.66-2.23-3.66-2.23 0-2.57 1.74-2.57 3.54V23h-3.99z"/></svg>LinkedIn</a>
-          <a class="pill" href="https://github.com/delizur" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 00-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.6-4-1.6-.6-1.6-1.5-2-1.5-2-1.2-.8.1-.8.1-.8 1.4.1 2.2 1.5 2.2 1.5 1.2 2.2 3.3 1.5 4.2 1.2.1-.9.5-1.5.9-1.9-2.7-.3-5.6-1.3-5.6-5.9 0-1.3.5-2.5 1.3-3.4-.1-.3-.6-1.6.1-3.3 0 0 1-.3 3.5 1.3a12 12 0 016.4 0c2.5-1.6 3.5-1.3 3.5-1.3.7 1.7.2 3 .1 3.3.8.9 1.3 2.1 1.3 3.4 0 4.6-2.9 5.6-5.6 5.9.5.4 1 1.3 1 2.6v3.9c0 .3.2.7.8.6A12 12 0 0012 .5z"/></svg>GitHub</a>
+        <div class="row" style="margin-top:14px;align-items:center">
+          <a class="btn" href="/assets/resume.pdf" download style="text-decoration:none">Résumé</a>
+          <!-- Icon-only top links: email, LinkedIn, GitHub (no pill outline; slightly larger clickable area) -->
+          <a class="icon-btn" href="mailto:danny.el133@gmail.com" title="Email" aria-label="Email" style="margin-left:10px">
+            <svg class="icon-img icon-email" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M4 7.00005L10.2 11.65C11.2667 12.45 12.7333 12.45 13.8 11.65L20 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+            </svg>
+          </a>
+          <a class="icon-btn" href="https://www.linkedin.com/in/danny-elizur/" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn" style="margin-left:8px">
+            <svg class="icon-img icon-linkedin" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M6.5 8C7.32843 8 8 7.32843 8 6.5C8 5.67157 7.32843 5 6.5 5C5.67157 5 5 5.67157 5 6.5C5 7.32843 5.67157 8 6.5 8Z" fill="currentColor"/>
+              <path d="M5 10C5 9.44772 5.44772 9 6 9H7C7.55228 9 8 9.44771 8 10V18C8 18.5523 7.55228 19 7 19H6C5.44772 19 5 18.5523 5 18V10Z" fill="currentColor"/>
+              <path d="M11 19H12C12.5523 19 13 18.5523 13 18V13.5C13 12 16 11 16 13V18.0004C16 18.5527 16.4477 19 17 19H18C18.5523 19 19 18.5523 19 18V12C19 10 17.5 9 15.5 9C13.5 9 13 10.5 13 10.5V10C13 9.44771 12.5523 9 12 9H11C10.4477 9 10 9.44772 10 10V18C10 18.5523 10.4477 19 11 19Z" fill="currentColor"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M20 1C21.6569 1 23 2.34315 23 4V20C23 21.6569 21.6569 23 20 23H4C2.34315 23 1 21.6569 1 20V4C1 2.34315 2.34315 1 4 1H20ZM20 3C20.5523 3 21 3.44772 21 4V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3H20Z" fill="currentColor"/>
+            </svg>
+          </a>
+          <a class="icon-btn" href="https://github.com/delizur" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub" style="margin-left:8px">
+            <svg class="icon-img icon-github" viewBox="-6 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="currentColor">
+              <path stroke="currentColor" stroke-width="0.2" stroke-linejoin="round" stroke-linecap="round" d="M18.36 9.28c0.48-1.72-0.24-3.6-0.28-3.72-0.12-0.28-0.4-0.52-0.72-0.52-0.080 0-1.92-0.16-3.76 1.24-1.44-0.28-3.080-0.36-3.16-0.36-0.040 0-0.040 0-0.080 0-0.080 0-1.72 0.080-3.16 0.36-1.84-1.4-3.68-1.24-3.76-1.24-0.32 0.040-0.6 0.24-0.72 0.52-0.040 0.080-0.8 2-0.28 3.72-0.92 1.28-1.64 2.96-1 5.96 0.6 2.72 2.84 4.24 5.16 4.76-0.2 0.56-0.28 1.24-0.36 1.96-0.96 0.040-1.56-0.52-2.4-1.4-0.72-0.76-1.52-1.64-2.84-1.92-0.44-0.12-0.88 0.16-1 0.64-0.080 0.48 0.2 0.92 0.68 1 0.76 0.16 1.28 0.72 1.92 1.4 0.84 0.88 1.8 1.96 3.52 1.96 0 0 0.040 0 0.040 0 0 0.92 0.080 1.8 0.12 2.52 0.040 0.48 0.44 0.8 0.92 0.76s0.8-0.44 0.76-0.92c-0.24-2.72-0.040-5.6 0.4-6 0.32-0.2 0.52-0.56 0.4-0.96-0.080-0.36-0.4-0.64-0.8-0.64-0.36 0-4.12-0.2-4.84-3.52-0.6-2.72 0.16-3.92 0.96-4.88 0.2-0.24 0.24-0.6 0.12-0.92-0.32-0.68-0.2-1.64-0.040-2.28 0.56 0.080 1.4 0.32 2.28 1.080 0.2 0.2 0.48 0.24 0.76 0.2 1.24-0.32 2.92-0.4 3.2-0.4 0.24 0 1.96 0.080 3.2 0.4 0.28 0.080 0.56 0 0.76-0.2 0.88-0.76 1.76-1 2.28-1.080 0.16 0.6 0.28 1.56-0.040 2.28-0.12 0.28-0.080 0.64 0.12 0.92 0.8 0.96 1.52 2.16 0.96 4.88-0.72 3.32-4.48 3.52-4.92 3.56-0.4 0-0.72 0.28-0.8 0.64s0.080 0.76 0.4 0.96c0.48 0.4 0.68 3.24 0.44 6-0.040 0.48 0.32 0.88 0.76 0.92 0.040 0 0.040 0 0.080 0 0.44 0 0.8-0.32 0.84-0.76 0.16-1.76 0.28-4.48-0.28-6.2 2.32-0.48 4.56-2.040 5.16-4.76 0.64-3-0.040-4.68-1-5.96z"></path>
+            </svg>
+          </a>
         </div>
         <div>
-          <span class="tag">JavaScript</span><span class="tag">TypeScript</span><span class="tag">Python</span><span class="tag">React</span><span class="tag">Node</span>
+          <span class="tag">CAD Design</span><span class="tag">Mechanical Prototyping</span><span class="tag">Circuit Design</span><span class="tag">Python</span><span class="tag">C/C++</span><span class="tag">Java</span><span class="tag">ESP32</span><span class="tag">Machine Learning</span>
         </div>
       </div>
       
@@ -121,52 +189,50 @@
         <article class="col-6 card project">
           <a class="thumb" href="/projects/autonomous-robot/" aria-label="Open Autonomous Robot page">
             <!-- Replace with screenshot at /assets/projects/autonomous-robot.jpg -->
-            <img src="/assets/projects/autonomous-robot.jpg" alt="Autonomous Robot screenshot" />
+            <img src="/assets/Autonomous%20Robot/Marshall_Photo.jpg" alt="Autonomous Robot screenshot" />
           </a>
           <h3>Autonomous Robot Competition</h3>
           <p>Designed and built a fully autonomous robot as part of a competition course.</p>
           <div>
           <span class="tag">Onshape CAD</span><span class="tag">Circuit Design</span><span class="tag">O-Scope Debugging</span><span class="tag">Soldering</span><span class="tag">ESP32</span>
         </div>
-          <div class="meta">Tech: [[React, Node, PostgreSQL]] · <a href="/projects/autonomous-robot/">Details</a></div>
+          <a class="read-more" href="/projects/autonomous-robot/">Read more</a>
         </article>
         <!-- Guitar Project -->
         <article class="col-6 card project">
           <a class="thumb" href="/projects/guitar-project/" aria-label="Open Guitar Project page">
             <!-- Replace with screenshot at /assets/projects/guitar-project.jpg -->
-            <img src="/assets/projects/guitar-project.jpg" alt="Guitar Project screenshot" />
+            <img src="/assets/Guitar%20Project/guitar_front.jpg" alt="Guitar Project screenshot" />
           </a>
           <h3>Electric Guitar</h3>
           <p>Built a (functional!) electric guitar from scratch, using a wood CNC and hand tools.</p>
-          <div class="meta">Tech: [[TypeScript, AWS, DynamoDB]] · <a href="/projects/guitar-project/">Details</a></div>
           <div>
           <span class="tag">CNC</span><span class="tag">Engineering Drawings</span><span class="tag">Machine Debugging</span>
+          <a class="read-more" href="/projects/guitar-project/">Read more</a>
         </div>
         </article>
         <!-- Machine Learning Course -->
         <article class="col-6 card project">
           <a class="thumb" href="/projects/machine-learning-robot/" aria-label="Open Machine Learning Robot page">
-            <!-- Replace with screenshot at /assets/projects/machine-learning-robot.jpg -->
-            <img src="/assets/projects/machine-learning-robot.jpg" alt="Machine Learning Robot screenshot" />
+            <!-- No screenshot yet — intentionally left blank until you add a screenshot -->
           </a>
           <h3>Machine Learning Robot (In Progress)</h3>
           <p>Currently working on a machine learning competition course, where a robot is trained in a simulated Gazebo environment making use of computer vision and modern machine learning techniques.</p>
-          <div class="meta">Tech: [[Python, TensorFlow, Scikit-Learn]] · <a href="/projects/machine-learning-robot/">Details</a></div>
           <div>
           <span class="tag">ROS</span><span class="tag">Linux Terminal</span><span class="tag">Machine Learning</span><span class="tag">Neural Networks</span><span class="tag">Python</span>
+          <a class="read-more" href="/projects/machine-learning-robot/">Read more</a>
         </div>
         </article>
         <!-- OASYS Project -->
         <article class="col-6 card project">
           <a class="thumb" href="/projects/oasys-project/" aria-label="Open OASYS Project page">
-            <!-- Replace with screenshot at /assets/projects/oasys-project.jpg -->
-            <img src="/assets/projects/oasys-project.jpg" alt="OASYS Project screenshot" />
+            <!-- No screenshot yet — intentionally left blank until you add a screenshot -->
           </a>
           <h3>Levelling System for a Lunar Greenhouse (In Progress)</h3>
           <p>Currently working alongside the Canadian Space Agency to develop a levelling system for the OASYS Lunar Greenhouse, a proposed design for sustainable food production on the moon.</p>
-          <div class="meta">Tech: [[Python, TensorFlow, Scikit-Learn]] · <a href="/projects/oasys-project/">Details</a></div>
           <div>
           <span class="tag">Machine Design</span><span class="tag">Solid Mechanics</span><span class="tag">FEA</span><span class="tag">CAD</span>
+          <a class="read-more" href="/projects/oasys-project/">Read more</a>
         </div>
         </article>
       </div>
@@ -176,8 +242,8 @@
       <h2>Experience</h2>
       <div class="card">
         <ul class="list">
-          <li><strong>Canmora Tech</strong> — Electrical-Mechanical Engineering Intern (Jan 2024 - Apr 2024)<br><span class="muted">One‑line impact statement. Add a bullet or two of measurable results.</span></li>
-          <li><strong>Vancouver Water Adventures</strong> — Kayak, Paddleboard, and Jet Ski Tour Guide (Aug 2020 - Aug 2024)<br><span class="muted">Focus on outcomes, not duties. Mention tools used.</span></li>
+          <li><strong>Canmora Tech</strong> — Electrical-Mechanical Engineering Intern (Jan 2024 - Apr 2024)<br><span class="muted">Developed innovative improvements to a powder-bed fusion metal 3D printer prototype</span><br><span class="muted">Modeled, prototyped, and tested various mechanical parts for use in the main 3D printer design</span></li>
+          <li><strong>Vancouver Water Adventures</strong> — Kayak, Paddleboard, and Jet Ski Tour Guide (Aug 2020 - Aug 2024)<br><span class="muted">Lead engaging tours of False Creek and English Bay</span><br><span class="muted">Taught beginner kayak and paddleboarding classes</span></li>
         </ul>
       </div>
     </section>
@@ -186,12 +252,20 @@
       <h2>Education</h2>
       <div class="card">
         <ul class="list">
-          <li><strong>[[Company]]</strong> — [[Title]] ([[Year–Year]])<br><span class="muted">One‑line impact statement. Add a bullet or two of measurable results.</span></li>
-          <li><strong>[[Company]]</strong> — [[Title]] ([[Year–Year]])<br><span class="muted">Focus on outcomes, not duties. Mention tools used.</span></li>
+          <li>
+            <strong>University of British Columbia</strong> — BASc. - Engineering Physics (2022 - Present)<br>
+            <span class="muted">2023: Trek Excellence Scholarship Recipient - offered to top 5% of undergraduate students</span><br>
+            <span class="muted">2022-2024: Dean’s List</span>
+            <div style="margin-top:8px">
+              <strong style="display:block;margin-bottom:6px">Relevant courses</strong>
+              <span class="muted">ENPH 353 - Engineering Physics Project I (Machine Learning Course)</span><br><span class="muted">MECH 325 - Machine Design</span><br><span class="muted">ENPH 253 - Introduction to Instrument Design (Autonomous Robot Course)</span><br><span class="muted">CPEN 221 - Software Construction I</span>
+            </div>
+          </li>
+          <li><strong>Prince of Wales Mini School</strong> — (2017 - 2022)<br><span class="muted">June 2022: Prince of Wales Top Scholar Award</span><br><span class="muted">May 2022: University of Waterloo Chem 13 Contest, placed 2nd in Vancouver</span><br><span class="muted">May 2022: Thompson Rivers University Chemistry Contest – Perfect Paper Award</span></li>
         </ul>
       </div>
     </section>
-
+<!-- 
     <section id="resume">
       <h2>Résumé</h2>
       <div class="card row" style="align-items:center;justify-content:space-between">
@@ -205,12 +279,31 @@
       <div class="card">
         <p>Have a question or want to collaborate? Email me or say hi on social.</p>
         <div class="row">
-          <a class="pill" href="mailto:danny.el133@gmail.com">Email</a>
-          <a class="pill" href="https://github.com/delizur" target="_blank" rel="noopener">GitHub</a>
-          <a class="pill" href="https://www.linkedin.com/in/dannyelizur" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="pill" href="mailto:danny.el133@gmail.com">
+            <svg class="icon-img icon-email" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="margin-right:8px">
+              <path d="M4 7.00005L10.2 11.65C11.2667 12.45 12.7333 12.45 13.8 11.65L20 7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+            </svg>
+            Email
+          </a>
+          <a class="pill" href="https://www.linkedin.com/in/dannyelizur" target="_blank" rel="noopener">
+            <svg class="icon-img icon-linkedin" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="margin-right:8px">
+              <path d="M6.5 8C7.32843 8 8 7.32843 8 6.5C8 5.67157 7.32843 5 6.5 5C5.67157 5 5 5.67157 5 6.5C5 7.32843 5.67157 8 6.5 8Z" fill="currentColor"/>
+              <path d="M5 10C5 9.44772 5.44772 9 6 9H7C7.55228 9 8 9.44771 8 10V18C8 18.5523 7.55228 19 7 19H6C5.44772 19 5 18.5523 5 18V10Z" fill="currentColor"/>
+              <path d="M11 19H12C12.5523 19 13 18.5523 13 18V13.5C13 12 16 11 16 13V18.0004C16 18.5527 16.4477 19 17 19H18C18.5523 19 19 18.5523 19 18V12C19 10 17.5 9 15.5 9C13.5 9 13 10.5 13 10.5V10C13 9.44771 12.5523 9 12 9H11C10.4477 9 10 9.44772 10 10V18C10 18.5523 10.4477 19 11 19Z" fill="currentColor"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M20 1C21.6569 1 23 2.34315 23 4V20C23 21.6569 21.6569 23 20 23H4C2.34315 23 1 21.6569 1 20V4C1 2.34315 2.34315 1 4 1H20ZM20 3C20.5523 3 21 3.44772 21 4V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3H20Z" fill="currentColor"/>
+            </svg>
+            LinkedIn
+          </a>
+          <a class="pill" href="https://github.com/delizur" target="_blank" rel="noopener">
+            <svg class="icon-img icon-github" viewBox="-6 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="currentColor" style="margin-right:8px">
+              <path stroke="currentColor" stroke-width="0.4" stroke-linejoin="round" stroke-linecap="round" d="M18.36 9.28c0.48-1.72-0.24-3.6-0.28-3.72-0.12-0.28-0.4-0.52-0.72-0.52-0.080 0-1.92-0.16-3.76 1.24-1.44-0.28-3.080-0.36-3.16-0.36-0.040 0-0.040 0-0.080 0-0.080 0-1.72 0.080-3.16 0.36-1.84-1.4-3.68-1.24-3.76-1.24-0.32 0.040-0.6 0.24-0.72 0.52-0.040 0.080-0.8 2-0.28 3.72-0.92 1.28-1.64 2.96-1 5.96 0.6 2.72 2.84 4.24 5.16 4.76-0.2 0.56-0.28 1.24-0.36 1.96-0.96 0.040-1.56-0.52-2.4-1.4-0.72-0.76-1.52-1.64-2.84-1.92-0.44-0.12-0.88 0.16-1 0.64-0.080 0.48 0.2 0.92 0.68 1 0.76 0.16 1.28 0.72 1.92 1.4 0.84 0.88 1.8 1.96 3.52 1.96 0 0 0.040 0 0.040 0 0 0.92 0.080 1.8 0.12 2.52 0.040 0.48 0.44 0.8 0.92 0.76s0.8-0.44 0.76-0.92c-0.24-2.72-0.040-5.6 0.4-6 0.32-0.2 0.52-0.56 0.4-0.96-0.080-0.36-0.4-0.64-0.8-0.64-0.36 0-4.12-0.2-4.84-3.52-0.6-2.72 0.16-3.92 0.96-4.88 0.2-0.24 0.24-0.6 0.12-0.92-0.32-0.68-0.2-1.64-0.040-2.28 0.56 0.080 1.4 0.32 2.28 1.080 0.2 0.2 0.48 0.24 0.76 0.2 1.24-0.32 2.92-0.4 3.2-0.4 0.24 0 1.96 0.080 3.2 0.4 0.28 0.080 0.56 0 0.76-0.2 0.88-0.76 1.76-1 2.28-1.080 0.16 0.6 0.28 1.56-0.040 2.28-0.12 0.28-0.080 0.64 0.12 0.92 0.8 0.96 1.52 2.16 0.96 4.88-0.72 3.32-4.48 3.52-4.92 3.56-0.4 0-0.72 0.28-0.8 0.64s0.080 0.76 0.4 0.96c0.48 0.4 0.68 3.24 0.44 6-0.040 0.48 0.32 0.88 0.76 0.92 0.040 0 0.040 0 0.080 0 0.44 0 0.8-0.32 0.84-0.76 0.16-1.76 0.28-4.48-0.28-6.2 2.32-0.48 4.56-2.040 5.16-4.76 0.64-3-0.040-4.68-1-5.96z"></path>
+            </svg>
+            GitHub
+          </a>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <div class="divider" role="presentation"></div>
   </main>
@@ -225,12 +318,17 @@
     const root = document.documentElement;
     const themeBtn = document.getElementById('theme');
     const setTheme = (t)=>{
-      if(t==='light'){root.classList.add('light');} else {root.classList.remove('light');}
+      // remove any previous theme classes and set the requested one
+      root.classList.remove('light','dark');
+      if(t === 'light') root.classList.add('light');
+      else if(t === 'dark') root.classList.add('dark');
       localStorage.setItem('theme', t);
     }
     const saved = localStorage.getItem('theme');
-    setTheme(saved|| (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light':'dark'));
-    themeBtn.addEventListener('click', ()=>{ setTheme(root.classList.contains('light') ? 'dark' : 'light'); });
+    // default to system preference if nothing saved
+    const defaultTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    setTheme(saved || defaultTheme);
+    themeBtn.addEventListener('click', ()=>{ const next = root.classList.contains('light') ? 'dark' : 'light'; setTheme(next); });
 
     // Current year
     document.getElementById('year').textContent = new Date().getFullYear();

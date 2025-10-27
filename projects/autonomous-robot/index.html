@@ -10,57 +10,289 @@
   :root{--bg:#ffffff;--panel:#f8fafc;--text:#0f172a;--muted:#334155}
   body{margin:0;font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text);font-size:17px}
     header{background:var(--panel);padding:12px 16px;border-bottom:1px solid rgba(15,23,42,.06)}
-    .nav{max-width:1000px;margin:auto;display:flex;align-items:center;justify-content:space-between}
+  .nav{max-width:1000px;margin:auto;display:flex;align-items:center;justify-content:space-between}
+  .nav > div{display:flex;align-items:center;gap:8px}
+  /* Improved icon sizing to avoid clipping and match homepage */
+  .nav .icon, .pill .icon, svg.icon{width:20px;height:20px;display:inline-block;vertical-align:middle;overflow:visible}
+  /* Ensure SVGs inside nav/pill/button are not clipped and align nicely */
+  svg.icon, .nav svg, .pill svg{overflow:visible}
+  .nav, .pill, .btn{overflow:visible;line-height:1;display:flex;align-items:center}
+  .pill{display:inline-flex;gap:6px;align-items:center;padding:6px 10px;border-radius:999px;border:1px solid rgba(15,23,42,0.06)}
+  .pill svg, .btn svg{display:block}
+  /* prevent stroke scaling issues that sometimes clip artwork */
+  svg.icon *{vector-effect:non-scaling-stroke}
+  /* Button styling consistent with homepage */
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:12px;background:linear-gradient(135deg,#38bdf8,#c084fc);color:#06131c;font-weight:700;border:none;cursor:pointer}
+  .btn:focus{outline:3px solid #22d3ee}
     .nav a{color:inherit;text-decoration:none;margin-left:10px}
     main{max-width:1000px;margin:24px auto;padding:24px}
     .card{background:var(--panel);border-radius:12px;padding:20px;border:1px solid rgba(15,23,42,.04)}
     img{max-width:100%;height:auto;border-radius:10px;display:block}
-    .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:12px 0}
-    @media (max-width:700px){.gallery{grid-template-columns:1fr}}
+    /* image caption overlay */
+    .figure-wrap{position:relative;display:block}
+    .figure-wrap .caption{position:absolute;left:8px;right:8px;bottom:8px;padding:6px 10px;background:rgba(255,255,255,0.9);color:var(--text);font-size:0.9rem;border-radius:8px;opacity:0;transform:translateY(6px);transition:opacity .18s,transform .18s}
+    .figure-wrap:hover .caption{opacity:1;transform:none}
+  .gallery{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0}
+  /* two-up layout: fixed 50% columns when possible, with a smaller min-width to allow side-by-side on narrower windows */
+  .figure-wrap{flex:0 0 calc(50% - 12px);width:calc(50% - 12px);aspect-ratio:16/9;overflow:hidden;min-width:140px}
+  /* show the entire image without cropping */
+  .figure-wrap img{width:100%;height:100%;object-fit:contain;object-position:center;display:block}
+  /* ensure video thumbnail matches figure sizing and doesn't blow out */
+  .video-thumb{flex:1 1 calc(48% - 12px);max-width:calc(48% - 12px);aspect-ratio:16/9;overflow:hidden;display:block}
+  .video-thumb img{width:100%;height:100%;object-fit:contain;object-position:center;display:block}
+  @media (max-width:700px){.figure-wrap{flex-basis:100%;max-width:100%}}
+  /* Video thumbnail and modal styles */
+  .video-thumb{position:relative;display:block;overflow:hidden;border-radius:10px}
+  .video-thumb img{display:block;width:100%;height:100%;object-fit:contain;object-position:center}
+  .video-thumb .play-button{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(2,6,23,.6);color:white;width:68px;height:68px;border-radius:999px;display:grid;place-items:center;font-size:28px;box-shadow:0 6px 18px rgba(2,8,23,.5)}
+  .video-modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,.6);z-index:9999;padding:24px}
+  .video-modal[aria-hidden="false"]{display:flex}
+  .video-modal-content{max-width:1000px;width:100%;background:var(--panel);padding:12px;border-radius:10px}
+  .back-home{display:inline-block;color:var(--muted);text-decoration:none;margin-bottom:12px}
+  .back-home:hover{text-decoration:underline}
+  .video-close{position:absolute;right:18px;top:18px;background:transparent;border:0;color:var(--muted);font-size:28px;cursor:pointer}
     footer{max-width:1000px;margin:40px auto;color:var(--muted);padding:0 24px}
     .tags{margin:10px 0}
     .tag{display:inline-block;background:rgba(15,23,42,0.03);padding:6px 10px;border-radius:999px;margin-right:8px;color:var(--muted)}
+    /* Dark mode support: system preference and an explicit html.dark / body.dark override */
+    @media (prefers-color-scheme: dark){
+      :root{--bg:#0b1220;--panel:#0f1724;--text:#e6eef8;--muted:#9fb2c9}
+      body{background:var(--bg);color:var(--text)}
+      header, .card, .video-modal-content{background:var(--panel)}
+      .figure-wrap .caption{background:rgba(6,10,16,0.7);color:var(--text)}
+      .img-modal{background:rgba(2,6,23,0.85)}
+      .img-close, .video-close{color:#fff}
+    }
+    html.dark, body.dark{--bg:#0b1220;--panel:#0f1724;--text:#e6eef8;--muted:#9fb2c9}
   </style>
 </head>
 <body>
   <header>
     <nav class="nav">
-      <div><strong>Danny Elizur</strong></div>
+      <div><a href="/" style="color:inherit;text-decoration:none"><strong>Danny Elizur</strong></a></div>
       <div>
-        <a href="/">Home</a>
-        <a href="/#projects">Projects</a>
-        <a href="/#about">About</a>
-        <a href="/#contact">Contact</a>
+  <a href="/">Home</a>
+  <a href="/#projects">Projects</a>
+  <a href="/#about">About</a>
+  <a href="/#contact">Contact</a>
+  <button id="theme" class="btn" aria-label="Toggle theme" style="margin-left:8px;font-size:0.95rem;padding:8px 10px"><svg class="icon" viewBox="-2 -2 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;vertical-align:middle;margin-right:6px"><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.41 1.41M16.95 16.95l1.41 1.41M5.64 18.36l1.41-1.41M16.95 7.05l1.41-1.41"/><circle cx="12" cy="12" r="5"/></svg><span style="vertical-align:middle">Theme</span></button>
       </div>
     </nav>
   </header>
 
   <main>
     <article class="card">
+      <div style="margin-bottom:8px"><a class="back-home" href="/">← Back to home</a></div>
       <h1>Autonomous Robot</h1>
       <p style="color:var(--muted);margin-top:6px">Competition robot — navigation &amp; control</p>
       <div class="tags">
-        <span class="tag">Onshape CAD</span><span class="tag">Circuit Design</span><span class="tag">ESP32</span>
+        <span class="tag">Onshape CAD</span><span class="tag">Circuit Design</span><span class="tag">O-Scope Debugging</span><span class="tag">Soldering</span><span class="tag">ESP32</span>
       </div>
 
       <div class="gallery">
-        <img src="/assets/projects/autonomous-robot-1.jpg" alt="Autonomous Robot - 1">
-        <img src="/assets/projects/autonomous-robot-2.jpg" alt="Autonomous Robot - 2">
-        <img src="/assets/projects/autonomous-robot-3.jpg" alt="Autonomous Robot - 3">
+          <div class="figure-wrap"><img src="/assets/Autonomous%20Robot/Marshall_Photo.jpg" alt="A photo of the robot"><div class="caption" data-for="Marshall_Photo">Robot — front view</div></div>
+          <div class="figure-wrap"><img src="/assets/Autonomous%20Robot/Team_Photo.jpg" alt="A photo of the team"><div class="caption" data-for="Team_Photo">Team photo</div></div>
+        <!-- Video thumbnail: clicking opens modal and plays video -->
+          <a href="#" class="video-thumb" id="rotary-thumb" data-video-src="/assets/Autonomous%20Robot/Rotary_Encoder_Operation.mp4" aria-label="Play Rotary Encoder Operation video">
+          <!-- use an existing gallery image as the thumbnail/poster to avoid missing poster files -->
+            <img id="rotary-poster" src="/assets/Autonomous%20Robot/Marshall_Photo.jpg" alt="Rotary Encoder Operation" />
+          <div class="play-button" aria-hidden="true">▶</div>
+        </a>
+      </div>
+
+      <!-- Video modal (hidden until user opens) -->
+      <div id="video-modal" class="video-modal" role="dialog" aria-hidden="true" aria-label="Video player overlay">
+        <div class="video-modal-content">
+          <button id="video-close" class="video-close" aria-label="Close video">✕</button>
+          <video id="rotary-video" controls muted preload="metadata" style="width:100%;height:auto;max-height:80vh">
+            <source src="/assets/Autonomous%20Robot/Rotary_Encoder_Operation.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
       </div>
 
   <p style="color:var(--muted)">As part of my program, I took a project course that involved the design and manufacturing of a fully functional line following robot. The project was a design competition among my peers, where each team had to build a “pet rescue” robot capable of rescuing pets from a burning building. Essentially, our robots were to navigate an obstacle course with stuffed animals (the “pets” needing rescue), identify the pets, collect them, and return them to a safe zone.</p>
   <p style="color:var(--muted)">This project gave me experience in mechanical, electrical, and even software design. All of our mechanical parts were designed in Onshape and manufactured via laser cutter or 3D printed. All of our electrical components made use of circuits that we had to design, prototype and solder ourselves. We made use of numerous different sensors (LiDAR, sonar, hall effect, reflectance), limit switches with debounce circuits, H-bridges, a rotary encoder, servos, and more. All components were managed by an ESP32 (Arduino-style microcontroller) with the software programmed in C/C++. The project taught us about PID (for line following), some control theory, as well as I2C communication.</p>
   <p style="color:var(--muted)">The course was an incredible opportunity to get hands on experience with mechanical and electrical design, and the fast-paced nature of the course made it intense and rewarding. The project also served as a great experience to develop project management skills, time management skills, and practice communicating and collaborating with a technical team to achieve a common goal – working through conflicts together and ensuring everyone is on the same page.</p>
-      <div style="margin-top:12px">
-        <a href="/">← Back to home</a>
-      </div>
+      
     </article>
   </main>
 
   <footer>
     <div style="text-align:center;padding:16px;color:var(--muted)">© <span id="year">2025</span> Danny Elizur</div>
   </footer>
-  <script>document.getElementById('year').textContent=new Date().getFullYear()</script>
+  <script>
+    // Apply persisted theme from root site (if present) so project pages follow the site toggle.
+    (function(){ try{ const theme = localStorage.getItem('theme'); if(theme==='dark') document.documentElement.classList.add('dark'); else if(theme==='light') document.documentElement.classList.remove('dark'); }catch(e){} })();
+    // Set current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+    // Theme toggle on project pages: mirror the homepage behavior
+    (function(){
+      try{
+        const btn = document.getElementById('theme');
+        function applyTheme(t){ document.documentElement.classList.remove('light','dark'); if(t==='light') document.documentElement.classList.add('light'); else if(t==='dark') document.documentElement.classList.add('dark'); localStorage.setItem('theme', t); }
+        btn && btn.addEventListener('click', function(){ const cur = document.documentElement.classList.contains('light') ? 'light' : 'dark'; applyTheme(cur==='light' ? 'dark' : 'light'); });
+      }catch(e){}
+    })();
+
+    // Video modal behavior
+    (function(){
+      // Try to capture a video frame to use as thumbnail/poster.
+      (function capturePoster(){
+        try{
+          const thumb = document.getElementById('rotary-thumb');
+          const posterImg = document.getElementById('rotary-poster');
+          const dataSrc = thumb && thumb.getAttribute('data-video-src');
+          if(!dataSrc || !posterImg) return;
+
+          const v = document.createElement('video');
+          v.muted = true;
+          v.playsInline = true;
+          v.preload = 'auto';
+          v.src = dataSrc;
+          v.crossOrigin = 'anonymous';
+
+          const tidy = ()=>{ try{ v.src=''; v.remove(); }catch(e){} };
+
+          v.addEventListener('loadeddata', function(){
+            try{
+              // seek to 0.5s or 0 if shorter
+              const seekTo = Math.min(0.5, Math.max(0, (v.duration||0) * 0.1));
+              const onseeked = function(){
+                try{
+                  const c = document.createElement('canvas');
+                  c.width = v.videoWidth || 640; c.height = v.videoHeight || 360;
+                  const ctx = c.getContext('2d');
+                  ctx.drawImage(v,0,0,c.width,c.height);
+                  const dataUrl = c.toDataURL('image/jpeg',0.8);
+                  posterImg.src = dataUrl;
+                  // also set modal video poster if present
+                  const modalVideo = document.getElementById('rotary-video');
+                  if(modalVideo) modalVideo.setAttribute('poster', dataUrl);
+                }catch(e){}
+                v.removeEventListener('seeked', onseeked);
+                tidy();
+              };
+              v.addEventListener('seeked', onseeked);
+              v.currentTime = seekTo;
+            }catch(e){ tidy(); }
+          });
+
+          // In case loadeddata doesn't fire, try a timeout fallback
+          setTimeout(()=>{ try{ if(posterImg && posterImg.src.indexOf('Marshall')!==-1){ /* keep original */ } }catch(e){} }, 3000);
+        }catch(e){}
+      })();
+
+      const modal = document.getElementById('video-modal');
+      const video = document.getElementById('rotary-video');
+      const thumb = document.getElementById('rotary-thumb');
+      const closeBtn = document.getElementById('video-close');
+
+      if(!modal || !video || !thumb) return;
+
+      function openModal(src){
+        // set src if provided (keeps HTML source as fallback)
+        const dataSrc = thumb.getAttribute('data-video-src') || src;
+        if(dataSrc){
+          // Only replace source if it's different to avoid reloads
+          const srcEl = video.querySelector('source');
+          if(!srcEl || srcEl.getAttribute('src') !== dataSrc){
+            if(srcEl) srcEl.setAttribute('src', dataSrc);
+            else{
+              const s = document.createElement('source'); s.src = dataSrc; s.type = 'video/mp4'; video.appendChild(s);
+            }
+            video.load();
+          }
+        }
+        modal.setAttribute('aria-hidden','false');
+        // ensure muted playback
+        try{ video.muted = true; }catch(e){}
+        // play (some browsers require user gesture; click counts)
+        const p = video.play();
+        if(p && p.catch) p.catch(()=>{/* silent */});
+      }
+
+      function closeModal(){
+        modal.setAttribute('aria-hidden','true');
+        try{ video.pause(); video.currentTime = 0; }catch(e){}
+      }
+
+      // Show friendly message if the video cannot be loaded
+      video.addEventListener('error', function(){
+        const container = modal.querySelector('.video-modal-content');
+        // remove video element to prevent broken player UI
+        try{ video.pause(); }catch(e){}
+        video.style.display = 'none';
+        let msg = container.querySelector('.video-error');
+        if(!msg){
+          msg = document.createElement('div');
+          msg.className = 'video-error';
+          msg.style.padding = '20px';
+          msg.style.color = 'var(--muted)';
+          msg.style.background = 'rgba(0,0,0,0.03)';
+          msg.style.borderRadius = '8px';
+          msg.style.marginTop = '8px';
+    msg.textContent = 'Sorry — the video file could not be loaded. Make sure /assets/Autonomous Robot/Rotary_Encoder_Operation.mp4 exists.';
+          container.appendChild(msg);
+        }
+      });
+
+      // Open on thumbnail click
+      thumb.addEventListener('click', function(e){ e.preventDefault(); openModal(); });
+
+      // Close handlers
+      closeBtn && closeBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', function(e){ if(e.target === modal) closeModal(); });
+      document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+
+      // populate captions for gallery images
+      document.querySelectorAll('.figure-wrap').forEach(function(f){
+        const img = f.querySelector('img');
+        const cap = f.querySelector('.caption');
+        if(!img || !cap) return;
+        cap.textContent = img.getAttribute('data-caption') || img.alt || '';
+      });
+
+      // Image lightbox modal
+      (function(){
+        // create modal markup
+        const modal = document.createElement('div'); modal.id = 'img-modal'; modal.className = 'img-modal'; modal.setAttribute('aria-hidden','true');
+        modal.innerHTML = `<div class="img-modal-content"><button id="img-close" class="img-close" aria-label="Close image">✕</button><img id="img-modal-img" alt=""/><div id="img-modal-caption" style="margin-top:8px;color:var(--muted)"></div></div>`;
+        document.body.appendChild(modal);
+
+        // styles for modal (scoped) — insert into a style node
+  const style = document.createElement('style');
+  style.textContent = `
+  .img-modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,.6);z-index:10000;padding:24px}
+  .img-modal[aria-hidden="false"]{display:flex}
+  .img-modal-content{max-width:1000px;width:100%;background:transparent;border-radius:8px;text-align:center;display:flex;align-items:center;justify-content:center;flex-direction:column}
+  .img-modal-content img{max-width:100%;max-height:80vh;height:auto;object-fit:contain;border-radius:8px;margin:0 auto}
+  .img-close{position:absolute;right:28px;top:24px;background:transparent;border:0;color:#fff;font-size:28px;cursor:pointer}
+  `;
+        document.head.appendChild(style);
+
+        const imgEl = document.getElementById('img-modal-img');
+        const capEl = document.getElementById('img-modal-caption');
+        const imgClose = document.getElementById('img-close');
+
+        function openImg(src, alt){
+          imgEl.src = src; imgEl.alt = alt||''; capEl.textContent = alt||'';
+          modal.setAttribute('aria-hidden','false');
+        }
+        function closeImg(){ modal.setAttribute('aria-hidden','true'); imgEl.src=''; }
+
+        // delegate click handlers (images only — do NOT attach to the video thumbnail)
+        document.querySelectorAll('.figure-wrap img').forEach(function(i){
+          i.style.cursor = 'zoom-in';
+          i.addEventListener('click', function(e){ e.preventDefault(); openImg(this.src, this.alt||''); });
+        });
+
+  imgClose.addEventListener('click', closeImg);
+  // close when clicking anywhere except the image itself
+  modal.addEventListener('click', function(e){ if(e.target !== imgEl) closeImg(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeImg(); });
+      })();
+    })();
+  </script>
 </body>
 </html>
