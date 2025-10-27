@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>[[Your Name]] · Portfolio</title>
+  <meta name="description" content="[[Your Name]] — portfolio, projects, and contact." />
+  <meta name="theme-color" content="#0ea5e9" />
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content="[[Your Name]] · Portfolio" />
+  <meta property="og:description" content="Projects, experience, and contact." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://your-username.github.io/" />
+  <meta property="og:image" content="/assets/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" href="/assets/favicon.png" />
+  <style>
+    :root{
+      --bg:#0b1016; --panel:#0f172a; --text:#e5e7eb; --muted:#94a3b8; --brand:#38bdf8; --accent:#c084fc; --ring:#22d3ee;
+      --bg-light:#ffffff; --panel-light:#f8fafc; --text-light:#0f172a; --muted-light:#475569;
+      --radius:16px; --shadow:0 10px 30px rgba(2,8,23,.35); --maxw:1000px;
+    }
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Noto Sans, Apple Color Emoji, Segoe UI Emoji; line-height:1.6; background:var(--bg); color:var(--text)}
+    .light body{background:var(--bg-light); color:var(--text-light)}
+    header{position:sticky;top:0;backdrop-filter:saturate(180%) blur(8px); background:color-mix(in oklab, var(--panel) 80%, transparent); border-bottom:1px solid rgba(148,163,184,.15); z-index:50}
+    .light header{background:color-mix(in oklab, var(--panel-light) 80%, transparent);}
+    .nav{max-width:var(--maxw);margin:auto;display:flex;align-items:center;justify-content:space-between;padding:12px 16px}
+    .brand{display:flex;gap:10px;align-items:center;font-weight:700;letter-spacing:.3px}
+    .brand .dot{width:10px;height:10px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--accent));box-shadow:0 0 0 3px color-mix(in oklab, var(--brand) 30%, transparent)}
+    .nav a{color:inherit;text-decoration:none;padding:8px 10px;border-radius:10px}
+    .nav a:hover{outline:1px dashed color-mix(in oklab, var(--brand) 40%, transparent)}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--accent));color:#06131c;font-weight:700;border:none;cursor:pointer}
+    .btn:focus{outline:3px solid var(--ring)}
+    main{max-width:var(--maxw);margin:24px auto;padding:24px}
+    section{margin:60px 0}
+
+    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center}
+    .card{background:color-mix(in oklab, var(--panel) 75%, transparent); border:1px solid rgba(148,163,184,.12); border-radius:var(--radius); box-shadow:var(--shadow); padding:24px}
+    .light .card{background:var(--panel-light); border-color:#e2e8f0}
+    .hero h1{font-size:clamp(28px,4vw,44px);line-height:1.15;margin:0 0 8px}
+    .hero p{color:var(--muted);margin-top:8px}
+    .tag{display:inline-block;font-size:12px;padding:4px 10px;border-radius:999px;border:1px solid rgba(148,163,184,.24);margin:8px 6px 0 0}
+
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+    .col-12{grid-column:span 12}
+    .col-6{grid-column:span 6}
+    .col-4{grid-column:span 4}
+    @media (max-width:900px){.hero{grid-template-columns:1fr}.col-6{grid-column:span 12}.col-4{grid-column:span 12}}
+
+    .project{display:flex;flex-direction:column;height:100%}
+    .project .thumb{aspect-ratio:16/9;border-radius:14px;background:#0a1622;display:grid;place-items:center;border:1px solid rgba(148,163,184,.18);overflow:hidden}
+    .project h3{margin:12px 0 6px}
+    .project p{color:var(--muted);margin:0 0 10px}
+    .meta{font-size:13px;color:var(--muted)}
+
+    .list li{margin:8px 0}
+
+    footer{max-width:var(--maxw);margin:60px auto 24px;padding:0 24px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(148,163,184,.25),transparent);margin:40px 0}
+    .sr-only{position:absolute;clip:rect(1px,1px,1px,1px);padding:0;border:0;height:1px;width:1px;overflow:hidden}
+    .icon{width:18px;height:18px;display:inline-block}
+    .row{display:flex;gap:10px;flex-wrap:wrap}
+    .kicker{letter-spacing:.2em;text-transform:uppercase;font-size:12px;color:var(--muted)}
+    .muted{color:var(--muted)}
+    .pill{display:inline-flex;gap:6px;align-items:center;padding:6px 10px;border:1px solid rgba(148,163,184,.24);border-radius:999px}
+  </style>
+</head>
+<body>
+  <a class="sr-only" href="#content">Skip to content</a>
+  <header>
+    <nav class="nav" aria-label="Primary">
+      <div class="brand"><span class="dot" aria-hidden="true"></span> <span>[[Your Name]]</span></div>
+      <div class="row">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#contact">Contact</a>
+        <button id="theme" class="btn" aria-label="Toggle theme"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.41 1.41M16.95 16.95l1.41 1.41M5.64 18.36l1.41-1.41M16.95 7.05l1.41-1.41"/><circle cx="12" cy="12" r="5"/></svg>Theme</button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="content">
+    <section id="hero" class="hero">
+      <div class="card">
+        <p class="kicker">Hello, I'm</p>
+        <h1>[[Your Name]]</h1>
+        <p>[[One‑line value prop — e.g., Software Engineer building reliable, user‑friendly products.]]</p>
+        <div class="row" style="margin-top:14px">
+          <a class="btn" href="#projects">View Projects</a>
+          <a class="pill" href="[[https://www.linkedin.com/in/your-profile]]" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.5 8h4V23h-4zM8.5 8h3.8v2.04h.06c.53-1 1.82-2.04 3.75-2.04 4.01 0 4.75 2.64 4.75 6.07V23h-4v-6.7c0-1.6-.03-3.66-2.23-3.66-2.23 0-2.57 1.74-2.57 3.54V23h-3.99z"/></svg>LinkedIn</a>
+          <a class="pill" href="[[https://github.com/your-username]]" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 00-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.6-4-1.6-.6-1.6-1.5-2-1.5-2-1.2-.8.1-.8.1-.8 1.4.1 2.2 1.5 2.2 1.5 1.2 2.2 3.3 1.5 4.2 1.2.1-.9.5-1.5.9-1.9-2.7-.3-5.6-1.3-5.6-5.9 0-1.3.5-2.5 1.3-3.4-.1-.3-.6-1.6.1-3.3 0 0 1-.3 3.5 1.3a12 12 0 016.4 0c2.5-1.6 3.5-1.3 3.5-1.3.7 1.7.2 3 .1 3.3.8.9 1.3 2.1 1.3 3.4 0 4.6-2.9 5.6-5.6 5.9.5.4 1 1.3 1 2.6v3.9c0 .3.2.7.8.6A12 12 0 0012 .5z"/></svg>GitHub</a>
+        </div>
+        <div>
+          <span class="tag">JavaScript</span><span class="tag">TypeScript</span><span class="tag">Python</span><span class="tag">React</span><span class="tag">Node</span>
+        </div>
+      </div>
+      <div class="card">
+        <h2 style="margin-top:0">Quick Facts</h2>
+        <ul class="list">
+          <li>Based in [[City, Country]].</li>
+          <li>Currently: [[Role or "open to opportunities"]].</li>
+          <li>Interested in [[interests]].</li>
+          <li><a href="#resume">Skip to résumé ↓</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="about">
+      <h2>About</h2>
+      <div class="card">
+        <p>Write a short paragraph (4–6 sentences) about who you are, what you do, and what you like building. Keep it friendly and specific.</p>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+      <div class="grid">
+        <!-- Project 1 -->
+        <article class="col-6 card project">
+          <a class="thumb" href="https://github.com/your-username/project-one" target="_blank" rel="noopener" aria-label="Open Project One on GitHub">
+            <!-- Replace with screenshot -->
+            <svg width="100%" height="100%" viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice"><rect width="400" height="225" fill="#07111b"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#8ab4f8" font-family="monospace" font-size="18">Project One Screenshot</text></svg>
+          </a>
+          <h3>Project One</h3>
+          <p>1–2 sentence summary of what it is, who it’s for, and what you built.</p>
+          <div class="meta">Tech: [[React, Node, PostgreSQL]] · <a href="https://project-one-demo.example" target="_blank" rel="noopener">Live demo</a></div>
+        </article>
+        <!-- Project 2 -->
+        <article class="col-6 card project">
+          <a class="thumb" href="https://github.com/your-username/project-two" target="_blank" rel="noopener" aria-label="Open Project Two on GitHub">
+            <svg width="100%" height="100%" viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice"><rect width="400" height="225" fill="#0a1622"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#a78bfa" font-family="monospace" font-size="18">Project Two Screenshot</text></svg>
+          </a>
+          <h3>Project Two</h3>
+          <p>What problem does it solve? Your role? Any impact (stars, users)?</p>
+          <div class="meta">Tech: [[TypeScript, AWS, DynamoDB]] · <a href="https://project-two-demo.example" target="_blank" rel="noopener">Live demo</a></div>
+        </article>
+        <!-- Add more projects as needed -->
+      </div>
+    </section>
+
+    <section id="experience">
+      <h2>Experience</h2>
+      <div class="card">
+        <ul class="list">
+          <li><strong>[[Company]]</strong> — [[Title]] ([[Year–Year]])<br><span class="muted">One‑line impact statement. Add a bullet or two of measurable results.</span></li>
+          <li><strong>[[Company]]</strong> — [[Title]] ([[Year–Year]])<br><span class="muted">Focus on outcomes, not duties. Mention tools used.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="resume">
+      <h2>Résumé</h2>
+      <div class="card row" style="align-items:center;justify-content:space-between">
+        <p class="muted" style="margin:0">Prefer a one‑pager? Grab the PDF.</p>
+        <a class="btn" href="/assets/resume.pdf" download>Download résumé</a>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <div class="card">
+        <p>Have a question or want to collaborate? Email me or say hi on social.</p>
+        <div class="row">
+          <a class="pill" href="mailto:you@example.com">Email</a>
+          <a class="pill" href="https://github.com/your-username" target="_blank" rel="noopener">GitHub</a>
+          <a class="pill" href="https://www.linkedin.com/in/your-profile" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="pill" href="https://twitter.com/your-handle" target="_blank" rel="noopener">Twitter/X</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider" role="presentation"></div>
+  </main>
+
+  <footer>
+    <span>© <span id="year"></span> [[Your Name]]</span>
+    <span class="muted">Built with HTML/CSS. Hosted on GitHub Pages.</span>
+  </footer>
+
+  <script>
+    // Light/Dark theme toggle (persists in localStorage)
+    const root = document.documentElement;
+    const themeBtn = document.getElementById('theme');
+    const setTheme = (t)=>{
+      if(t==='light'){root.classList.add('light');} else {root.classList.remove('light');}
+      localStorage.setItem('theme', t);
+    }
+    const saved = localStorage.getItem('theme');
+    setTheme(saved|| (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light':'dark'));
+    themeBtn.addEventListener('click', ()=>{ setTheme(root.classList.contains('light') ? 'dark' : 'light'); });
+
+    // Current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
