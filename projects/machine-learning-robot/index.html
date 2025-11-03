@@ -81,9 +81,30 @@
       <span class="tag">ROS</span><span class="tag">Linux Terminal</span><span class="tag">Machine Learning</span><span class="tag">Neural Networks</span><span class="tag">Python</span>
 
       <div class="gallery" style="margin:12px 0">
-        <!-- No screenshots yet — intentionally left blank until you add images -->
-        <div class="figure-wrap"><div class="figure-empty" aria-hidden="true"></div><div class="caption"></div></div>
-        <div class="figure-wrap"><div class="figure-empty" aria-hidden="true"></div><div class="caption"></div></div>
+        <!-- Embedded demo videos from assets (play inline). Posters omitted to allow browser to show first frame when available. -->
+        <div class="figure-wrap">
+          <video controls muted playsinline preload="metadata" data-caption="SIFT demo" style="width:100%;height:100%;display:block;border-radius:8px;object-fit:contain">
+            <source src="/assets/Machine Learning Robot/SIFT_demo.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <div class="caption">SIFT demo</div>
+        </div>
+
+        <div class="figure-wrap">
+          <video controls muted playsinline preload="metadata" data-caption="RL line-following demo" style="width:100%;height:100%;display:block;border-radius:8px;object-fit:contain">
+            <source src="/assets/Machine Learning Robot/RL_linefollowing_demo.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <div class="caption">RL line-following demo</div>
+        </div>
+
+        <div class="figure-wrap">
+          <video controls muted playsinline preload="metadata" data-caption="Inverted pendulum demo" style="width:100%;height:100%;display:block;border-radius:8px;object-fit:contain">
+            <source src="/assets/Machine Learning Robot/inverted_pendulum_demo.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <div class="caption">Inverted pendulum demo</div>
+        </div>
       </div>
 
   <p style="color:var(--muted)">Currently taking a project course on applied machine learning techniques. The course covers fully connected neural networks, convolutional neural networks (CNNs), reinforcement learning, imitation learning, as well as computer vision using SIFT (Scale-Invariant Feature Transform) and CNNs. The course culminates in a robot competition, where each team codes and trains a line-following robot to navigate an obstacle course while reading and processing image data on signposts along the way. The robots are programmed in ROS in a simulated Gazebo environment running on Linux. The robots are free to use any number of machine learning techniques to achieve the required competition tasks.</p>
@@ -109,10 +130,13 @@
     })();
     (function(){
       document.querySelectorAll('.figure-wrap').forEach(function(f){
-        const img = f.querySelector('img');
         const cap = f.querySelector('.caption');
-        if(!img || !cap) return;
-        cap.textContent = img.getAttribute('data-caption') || img.alt || '';
+        if(!cap) return;
+        const img = f.querySelector('img');
+        const vid = f.querySelector('video');
+        if(img) cap.textContent = img.getAttribute('data-caption') || img.alt || '';
+        else if(vid) cap.textContent = vid.getAttribute('data-caption') || vid.getAttribute('title') || vid.getAttribute('aria-label') || '';
+        else cap.textContent = '';
       });
 
       // Image lightbox modal (shared behavior)

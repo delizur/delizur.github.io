@@ -45,6 +45,18 @@
   /* ensure video thumbnail matches figure sizing and doesn't blow out */
   .video-thumb{flex:1 1 calc(48% - 12px);max-width:calc(48% - 12px);aspect-ratio:16/9;overflow:hidden;display:block}
   .video-thumb img{width:100%;height:100%;object-fit:contain;object-position:center;display:block}
+  /* Ensure fullscreen video keeps aspect ratio for portrait videos */
+  video:fullscreen, video:-webkit-full-screen, .figure-wrap video:fullscreen, .figure-wrap video:-webkit-full-screen{
+    /* let the browser size based on intrinsic aspect, but constrain to viewport */
+    width: auto !important;
+    height: auto !important;
+    max-height: 100vh !important;
+    max-width: 100vw !important;
+    object-fit: contain !important;
+    transform: none !important;
+  }
+
+  /* (removed forced-rotation styles - using native player) */
   @media (max-width:700px){.figure-wrap{flex-basis:100%;max-width:100%}}
   /* Video thumbnail and modal styles */
   .video-thumb{position:relative;display:block;overflow:hidden;border-radius:10px}
@@ -99,23 +111,15 @@
       <div class="gallery">
           <div class="figure-wrap"><img src="/assets/Autonomous%20Robot/Marshall_Photo.jpg" alt="A picture of Marshall (our robot)"><div class="caption" data-for="Marshall_Photo">Robot — front view</div></div>
           <div class="figure-wrap"><img src="/assets/Autonomous%20Robot/Team_Photo.jpg" alt="Team photo"><div class="caption" data-for="Team_Photo">Team photo</div></div>
-        <!-- Video thumbnail: clicking opens modal and plays video -->
-          <a href="#" class="video-thumb" id="rotary-thumb" data-video-src="/assets/Autonomous%20Robot/Rotary_Encoder_Operation.mp4" aria-label="Play Rotary Encoder Demo">
-          <!-- use an existing gallery image as the thumbnail/poster to avoid missing poster files -->
-            <img id="rotary-poster" src="/assets/Autonomous%20Robot/Marshall_Photo.jpg" alt="Demo of the rotary encoder circuit" />
-          <div class="play-button" aria-hidden="true">▶</div>
-        </a>
+        <!-- removed thumbnail-with-play-overlay; video is embedded inline below -->
       </div>
 
-      <!-- Video modal (hidden until user opens) -->
-      <div id="video-modal" class="video-modal" role="dialog" aria-hidden="true" aria-label="Video player overlay">
-        <div class="video-modal-content">
-          <button id="video-close" class="video-close" aria-label="Close video">✕</button>
-          <video id="rotary-video" controls muted preload="metadata" style="width:100%;height:auto;max-height:80vh">
-            <source src="/assets/Autonomous%20Robot/Rotary_Encoder_Operation.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        </div>
+      <div class="figure-wrap">
+        <video controls muted playsinline preload="metadata" data-caption="Rotary encoder demo" style="width:100%;height:100%;display:block;border-radius:8px;object-fit:contain">
+          <source src="/assets/Autonomous%20Robot/Rotary_Encoder_Operation.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <div class="caption">Rotary encoder demo</div>
       </div>
 
   <p style="color:var(--muted)">As part of my program, I took a project course that involved the design and manufacturing of a fully functional line following robot. The project was a design competition among my peers, where each team had to build a “pet rescue” robot capable of rescuing pets from a burning building. Essentially, our robots were to navigate an obstacle course with stuffed animals (the “pets” needing rescue), identify the pets, collect them, and return them to a safe zone.</p>
@@ -142,134 +146,26 @@
       }catch(e){}
     })();
 
-    // Video modal behavior
+    // Populate captions for images and videos, and wire image lightbox
     (function(){
-      // Try to capture a video frame to use as thumbnail/poster.
-      (function capturePoster(){
-        try{
-          const thumb = document.getElementById('rotary-thumb');
-          const posterImg = document.getElementById('rotary-poster');
-          const dataSrc = thumb && thumb.getAttribute('data-video-src');
-          if(!dataSrc || !posterImg) return;
-
-          const v = document.createElement('video');
-          v.muted = true;
-          v.playsInline = true;
-          v.preload = 'auto';
-          v.src = dataSrc;
-          v.crossOrigin = 'anonymous';
-
-          const tidy = ()=>{ try{ v.src=''; v.remove(); }catch(e){} };
-
-          v.addEventListener('loadeddata', function(){
-            try{
-              // seek to 0.5s or 0 if shorter
-              const seekTo = Math.min(0.5, Math.max(0, (v.duration||0) * 0.1));
-              const onseeked = function(){
-                try{
-                  const c = document.createElement('canvas');
-                  c.width = v.videoWidth || 640; c.height = v.videoHeight || 360;
-                  const ctx = c.getContext('2d');
-                  ctx.drawImage(v,0,0,c.width,c.height);
-                  const dataUrl = c.toDataURL('image/jpeg',0.8);
-                  posterImg.src = dataUrl;
-                  // also set modal video poster if present
-                  const modalVideo = document.getElementById('rotary-video');
-                  if(modalVideo) modalVideo.setAttribute('poster', dataUrl);
-                }catch(e){}
-                v.removeEventListener('seeked', onseeked);
-                tidy();
-              };
-              v.addEventListener('seeked', onseeked);
-              v.currentTime = seekTo;
-            }catch(e){ tidy(); }
-          });
-
-          // In case loadeddata doesn't fire, try a timeout fallback
-          setTimeout(()=>{ try{ if(posterImg && posterImg.src.indexOf('Marshall')!==-1){ /* keep original */ } }catch(e){} }, 3000);
-        }catch(e){}
-      })();
-
-      const modal = document.getElementById('video-modal');
-      const video = document.getElementById('rotary-video');
-      const thumb = document.getElementById('rotary-thumb');
-      const closeBtn = document.getElementById('video-close');
-
-      if(!modal || !video || !thumb) return;
-
-      function openModal(src){
-        // set src if provided (keeps HTML source as fallback)
-        const dataSrc = thumb.getAttribute('data-video-src') || src;
-        if(dataSrc){
-          // Only replace source if it's different to avoid reloads
-          const srcEl = video.querySelector('source');
-          if(!srcEl || srcEl.getAttribute('src') !== dataSrc){
-            if(srcEl) srcEl.setAttribute('src', dataSrc);
-            else{
-              const s = document.createElement('source'); s.src = dataSrc; s.type = 'video/mp4'; video.appendChild(s);
-            }
-            video.load();
-          }
-        }
-        modal.setAttribute('aria-hidden','false');
-        // ensure muted playback
-        try{ video.muted = true; }catch(e){}
-        // play (some browsers require user gesture; click counts)
-        const p = video.play();
-        if(p && p.catch) p.catch(()=>{/* silent */});
-      }
-
-      function closeModal(){
-        modal.setAttribute('aria-hidden','true');
-        try{ video.pause(); video.currentTime = 0; }catch(e){}
-      }
-
-      // Show friendly message if the video cannot be loaded
-      video.addEventListener('error', function(){
-        const container = modal.querySelector('.video-modal-content');
-        // remove video element to prevent broken player UI
-        try{ video.pause(); }catch(e){}
-        video.style.display = 'none';
-        let msg = container.querySelector('.video-error');
-        if(!msg){
-          msg = document.createElement('div');
-          msg.className = 'video-error';
-          msg.style.padding = '20px';
-          msg.style.color = 'var(--muted)';
-          msg.style.background = 'rgba(0,0,0,0.03)';
-          msg.style.borderRadius = '8px';
-          msg.style.marginTop = '8px';
-    msg.textContent = 'Sorry — the video file could not be loaded. Make sure /assets/Autonomous Robot/Rotary_Encoder_Operation.mp4 exists.';
-          container.appendChild(msg);
-        }
-      });
-
-      // Open on thumbnail click
-      thumb.addEventListener('click', function(e){ e.preventDefault(); openModal(); });
-
-      // Close handlers
-      closeBtn && closeBtn.addEventListener('click', closeModal);
-      modal.addEventListener('click', function(e){ if(e.target === modal) closeModal(); });
-      document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
-
-      // populate captions for gallery images
       document.querySelectorAll('.figure-wrap').forEach(function(f){
-        const img = f.querySelector('img');
         const cap = f.querySelector('.caption');
-        if(!img || !cap) return;
-        cap.textContent = img.getAttribute('data-caption') || img.alt || '';
+        if(!cap) return;
+        const img = f.querySelector('img');
+        const vid = f.querySelector('video');
+        if(img) cap.textContent = img.getAttribute('data-caption') || img.alt || '';
+        else if(vid) cap.textContent = vid.getAttribute('data-caption') || vid.getAttribute('title') || vid.getAttribute('aria-label') || '';
+        else cap.textContent = '';
+        if(vid){ try{ vid.muted = true; vid.playsInline = true; }catch(e){} }
       });
 
-      // Image lightbox modal
+      // Image lightbox modal (shared behavior)
       (function(){
-        // create modal markup
         const modal = document.createElement('div'); modal.id = 'img-modal'; modal.className = 'img-modal'; modal.setAttribute('aria-hidden','true');
         modal.innerHTML = `<div class="img-modal-content"><button id="img-close" class="img-close" aria-label="Close image">✕</button><img id="img-modal-img" alt=""/><div id="img-modal-caption" style="margin-top:8px;color:var(--muted)"></div></div>`;
         document.body.appendChild(modal);
-
-        // styles for modal (scoped) — insert into a style node
-  const style = document.createElement('style');
-  style.textContent = `
+        const style = document.createElement('style');
+        style.textContent = `
   .img-modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,.6);z-index:10000;padding:24px}
   .img-modal[aria-hidden="false"]{display:flex}
   .img-modal-content{max-width:1000px;width:100%;background:transparent;border-radius:8px;text-align:center;display:flex;align-items:center;justify-content:center;flex-direction:column}
@@ -277,28 +173,17 @@
   .img-close{position:absolute;right:28px;top:24px;background:transparent;border:0;color:#fff;font-size:28px;cursor:pointer}
   `;
         document.head.appendChild(style);
-
         const imgEl = document.getElementById('img-modal-img');
         const capEl = document.getElementById('img-modal-caption');
         const imgClose = document.getElementById('img-close');
-
-        function openImg(src, alt){
-          imgEl.src = src; imgEl.alt = alt||''; capEl.textContent = alt||'';
-          modal.setAttribute('aria-hidden','false');
-        }
+        function openImg(src, alt){ imgEl.src = src; imgEl.alt = alt||''; capEl.textContent = alt||''; modal.setAttribute('aria-hidden','false'); }
         function closeImg(){ modal.setAttribute('aria-hidden','true'); imgEl.src=''; }
-
-        // delegate click handlers (images only — do NOT attach to the video thumbnail)
-        document.querySelectorAll('.figure-wrap img').forEach(function(i){
-          i.style.cursor = 'zoom-in';
-          i.addEventListener('click', function(e){ e.preventDefault(); openImg(this.src, this.alt||''); });
-        });
-
-  imgClose.addEventListener('click', closeImg);
-  // close when clicking anywhere except the image itself
-  modal.addEventListener('click', function(e){ if(e.target !== imgEl) closeImg(); });
-  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeImg(); });
+        document.querySelectorAll('.figure-wrap img').forEach(function(i){ i.style.cursor='zoom-in'; i.addEventListener('click', function(e){ e.preventDefault(); openImg(this.src, this.alt||''); }); });
+        imgClose && imgClose.addEventListener('click', closeImg);
+        modal.addEventListener('click', function(e){ if(e.target !== imgEl) closeImg(); });
+        document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeImg(); });
       })();
+        
     })();
   </script>
 </body>

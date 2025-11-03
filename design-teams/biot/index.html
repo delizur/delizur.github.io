@@ -27,8 +27,11 @@
   /* prevent stroke scaling issues that sometimes clip artwork */
   svg.icon *{vector-effect:non-scaling-stroke}
   /* Button styling consistent with homepage */
-  .btn{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:12px;background:linear-gradient(135deg,#38bdf8,#c084fc);color:#06131c;font-weight:700;border:none;cursor:pointer}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:12px;background:linear-gradient(135deg,#38bdf8,#c084fc);color:#06131c;font-weight:700;border:none;cursor:pointer;position:relative}
   .btn:focus{outline:3px solid #22d3ee}
+  /* underline for theme/resume button (match homepage behavior) */
+  .btn::after{content:'';position:absolute;left:8px;right:8px;bottom:6px;height:2px;background:#000;transform:scaleX(0);transform-origin:left center;transition:transform .16s ease,opacity .16s ease;border-radius:2px;opacity:0}
+  .btn:hover::after,.btn:focus::after{transform:scaleX(1);opacity:1}
     .nav a{color:inherit;text-decoration:none;margin-left:10px}
     main{max-width:1000px;margin:24px auto;padding:24px}
   .card{background:var(--panel);border-radius:12px;padding:20px;border:1px solid rgba(15,23,42,.04)}
@@ -92,10 +95,19 @@
     </article>
   </main>
 
-  <!-- duplicate header removed; single canonical nav above -->
+  <script>
+    // Apply persisted theme from root site (if present) so project pages follow the site toggle.
+    (function(){ try{ const theme = localStorage.getItem('theme'); if(theme==='dark') document.documentElement.classList.add('dark'); else if(theme==='light') document.documentElement.classList.remove('dark'); }catch(e){} })();
+
+    // Theme toggle on project pages: mirror the homepage behavior
+    (function(){
+      try{
+        const btn = document.getElementById('theme');
+        function applyTheme(t){ document.documentElement.classList.remove('light','dark'); if(t==='light') document.documentElement.classList.add('light'); else if(t==='dark') document.documentElement.classList.add('dark'); localStorage.setItem('theme', t); }
         btn && btn.addEventListener('click', function(){ const cur = document.documentElement.classList.contains('light') ? 'light' : 'dark'; applyTheme(cur==='light' ? 'dark' : 'light'); });
       }catch(e){}
     })();
+
     (function(){
       document.querySelectorAll('.figure-wrap').forEach(function(f){
         const img = f.querySelector('img');
@@ -109,8 +121,8 @@
         const modal = document.createElement('div'); modal.id = 'img-modal'; modal.className = 'img-modal'; modal.setAttribute('aria-hidden','true');
         modal.innerHTML = `<div class="img-modal-content"><button id="img-close" class="img-close" aria-label="Close image">✕</button><img id="img-modal-img" alt=""/><div id="img-modal-caption" style="margin-top:8px;color:var(--muted)"></div></div>`;
         document.body.appendChild(modal);
-  const style = document.createElement('style');
-  style.textContent = `
+        const style = document.createElement('style');
+        style.textContent = `
   .img-modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,.6);z-index:10000;padding:24px}
   .img-modal[aria-hidden="false"]{display:flex}
   .img-modal-content{max-width:1000px;width:100%;background:transparent;border-radius:8px;text-align:center;display:flex;align-items:center;justify-content:center;flex-direction:column}
@@ -118,16 +130,15 @@
   .img-close{position:absolute;right:28px;top:24px;background:transparent;border:0;color:#fff;font-size:28px;cursor:pointer}
   `;
         document.head.appendChild(style);
-  const imgEl = document.getElementById('img-modal-img');
-  const capEl = document.getElementById('img-modal-caption');
-  const imgClose = document.getElementById('img-close');
-  function openImg(src, alt){ imgEl.src = src; imgEl.alt = alt||''; capEl.textContent = alt||''; modal.setAttribute('aria-hidden','false'); }
-  function closeImg(){ modal.setAttribute('aria-hidden','true'); imgEl.src=''; }
-  document.querySelectorAll('.figure-wrap img').forEach(function(i){ i.style.cursor='zoom-in'; i.addEventListener('click', function(e){ e.preventDefault(); openImg(this.src, this.alt||''); }); });
-  imgClose.addEventListener('click', closeImg);
-  // close when clicking anywhere except the image itself
-  modal.addEventListener('click', function(e){ if(e.target !== imgEl) closeImg(); });
-  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeImg(); });
+        const imgEl = document.getElementById('img-modal-img');
+        const capEl = document.getElementById('img-modal-caption');
+        const imgClose = document.getElementById('img-close');
+        function openImg(src, alt){ imgEl.src = src; imgEl.alt = alt||''; capEl.textContent = alt||''; modal.setAttribute('aria-hidden','false'); }
+        function closeImg(){ modal.setAttribute('aria-hidden','true'); imgEl.src=''; }
+        document.querySelectorAll('.figure-wrap img').forEach(function(i){ i.style.cursor='zoom-in'; i.addEventListener('click', function(e){ e.preventDefault(); openImg(this.src, this.alt||''); }); });
+        imgClose && imgClose.addEventListener('click', closeImg);
+        modal.addEventListener('click', function(e){ if(e.target !== imgEl) closeImg(); });
+        document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeImg(); });
       })();
     })();
   </script>
