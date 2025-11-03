@@ -7,10 +7,12 @@
   <meta name="description" content="Working with the Canadian Space Agency on a levelling system for the OASYS Lunar Greenhouse.">
   <link rel="icon" href="/assets/favicon.png" />
   <style>
-  :root{--bg:#ffffff;--panel:#f8fafc;--text:#0f172a;--muted:#334155}
+  :root{--bg:#ffffff;--panel:#f8fafc;--text:#0f172a;--muted:#334155;--brand:#38bdf8;--accent:#c084fc;--ring:#22d3ee}
   body{margin:0;font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text);font-size:17px}
     header{background:var(--panel);padding:12px 16px;border-bottom:1px solid rgba(15,23,42,.06)}
     .nav{max-width:1000px;margin:auto;display:flex;align-items:center;justify-content:space-between}
+  .brand{display:flex;gap:10px;align-items:center;font-weight:700;letter-spacing:.3px}
+  .brand .dot{width:10px;height:10px;border-radius:999px;background:linear-gradient(135deg,#38bdf8,#c084fc);box-shadow:0 0 0 3px rgba(56,189,248,0.3)}
     .nav > div{display:flex;align-items:center;gap:8px}
   /* Improved icon sizing to avoid clipping and match homepage */
   .nav .icon, .pill .icon, svg.icon{width:20px;height:20px;display:inline-block;vertical-align:middle;overflow:visible}
@@ -24,7 +26,13 @@
   /* Button styling consistent with homepage */
   .btn{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:12px;background:linear-gradient(135deg,#38bdf8,#c084fc);color:#06131c;font-weight:700;border:none;cursor:pointer}
   .btn:focus{outline:3px solid #22d3ee}
+  /* underline for theme/resume button (match homepage behavior) */
+  .btn::after{content:'';position:absolute;left:8px;right:8px;bottom:6px;height:2px;background:#000;transform:scaleX(0);transform-origin:left center;transition:transform .16s ease,opacity .16s ease;border-radius:2px;opacity:0}
+  .btn:hover::after,.btn:focus::after{transform:scaleX(1);opacity:1}
     .nav a{color:inherit;text-decoration:none;margin-left:10px}
+    /* match homepage nav link appearance/hover */
+    .nav a{padding:8px 10px;border-radius:10px}
+    .nav a:hover{outline:1px dashed color-mix(in oklab, var(--brand, #38bdf8) 40%, transparent)}
     main{max-width:1000px;margin:24px auto;padding:24px}
   .card{background:var(--panel);border-radius:12px;padding:20px;border:1px solid rgba(15,23,42,.04)}
   .back-home{display:inline-block;color:var(--muted);text-decoration:none;margin-bottom:12px}
@@ -36,6 +44,10 @@
   .gallery{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0}
   .figure-empty{width:100%;min-height:160px;border-radius:10px;background:transparent}
   .figure-wrap img{width:100%;height:100%;object-fit:contain;object-position:center;display:block}
+  /* CSA logo: increase allowed size so it doesn't appear tiny — adjust these numbers if you want it larger or smaller. */
+  .figure-wrap img[alt="Canadian Space Agency"]{width:auto;height:auto;max-width:85%;max-height:85%;margin:0 auto;display:block;object-fit:contain;background:#000}
+  /* Make the figure container match the CSA logo background so the padding color is visually identical */
+  .figure-wrap.csa{background:#000}
   @media (max-width:700px){.figure-wrap{flex-basis:100%;max-width:100%}}
     footer{max-width:1000px;margin:40px auto;color:var(--muted);padding:0 24px}
     .tags{margin:10px 0}
@@ -46,6 +58,14 @@
       body{background:var(--bg);color:var(--text)}
       header, .card{background:var(--panel)}
       .figure-wrap .caption{background:rgba(6,10,16,0.7);color:var(--text)}
+      /* Force dark caption text for white-padded thumbnails (BIoT/CSA) so captions are readable in dark mode */
+      .figure-wrap.biot .caption,
+      .figure-wrap.csa .caption,
+      .figure-wrap img[alt="Canadian Space Agency"] + .caption,
+      .figure-wrap img[alt="UBC BIoT"] + .caption{
+        background:rgba(255,255,255,0.95) !important;
+        color:#06131c !important;
+      }
       .img-modal{background:rgba(2,6,23,0.85)}
       .img-close{color:#fff}
     }
@@ -54,14 +74,16 @@
 </head>
 <body>
   <header>
-    <nav class="nav">
-      <div><a href="/" style="color:inherit;text-decoration:none"><strong>Danny Elizur</strong></a></div>
-      <div>
-  <a href="/">Home</a>
-  <a href="/#projects">Projects</a>
+    <nav class="nav" aria-label="Primary">
+      <a class="brand" href="/"><span class="dot" aria-hidden="true"></span> <span>Danny Elizur</span></a>
+    <div class="row">
   <a href="/#about">About</a>
+  <a href="/#projects">Projects</a>
+  <a href="/#design-teams">Design Teams</a>
+  <a href="/#experience">Experience</a>
+  <a href="/#education">Education</a>
   <a href="/#contact">Contact</a>
-  <button id="theme" class="btn" aria-label="Toggle theme" style="margin-left:8px;font-size:0.95rem;padding:8px 10px"><svg class="icon" viewBox="-2 -2 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;vertical-align:middle;margin-right:6px"><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.41 1.41M16.95 16.95l1.41 1.41M5.64 18.36l1.41-1.41M16.95 7.05l1.41-1.41"/><circle cx="12" cy="12" r="5"/></svg><span style="vertical-align:middle">Theme</span></button>
+        <button id="theme" class="btn" aria-label="Toggle theme" style="margin-left:8px;font-size:0.95rem;padding:8px 10px"><svg class="icon" viewBox="-2 -2 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;vertical-align:middle;margin-right:6px"><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.41 1.41M16.95 16.95l1.41 1.41M5.64 18.36l1.41-1.41M16.95 7.05l1.41-1.41"/><circle cx="12" cy="12" r="5"/></svg><span style="vertical-align:middle">Theme</span></button>
       </div>
     </nav>
   </header>
@@ -71,15 +93,13 @@
       <div style="margin-bottom:8px"><a class="back-home" href="/">← Back to home</a></div>
       <h1>OASYS Project</h1>
       <p style="color:var(--muted);margin-top:6px">Levelling system for a lunar greenhouse</p>
-      <span class="tag">Machine Design</span><span class="tag">Solid Mechanics</span><span class="tag">FEA</span><span class="tag">CAD</span>
+      <span class="tag">Machine Design</span><span class="tag">Solid Mechanics</span><span class="tag">FEA</span><span class="tag">CAD</span><span class="tag">Thermal Analysis</span>
 
       <div class="gallery">
-        <!-- No screenshots yet — intentionally left blank until you add images -->
-        <div class="figure-wrap"><div class="figure-empty" aria-hidden="true"></div><div class="caption"></div></div>
-        <div class="figure-wrap"><div class="figure-empty" aria-hidden="true"></div><div class="caption"></div></div>
+  <div class="figure-wrap csa"><img src="/assets/OASYS%20Project/CSA%20logo.jpg" alt="Canadian Space Agency"><div class="caption" data-for="CSA logo">CSA Logo</div></div>
       </div>
 
-  <p style="color:var(--muted)">Project summary: objectives, partners, technical approach, and next steps. Replace this text with details.</p>
+  <p style="color:var(--muted)">Currently working in a team of students under supervision of the Canadian Space Agency, to design a levelling system for their proposed OASYS lunar greenhouse. The OASYS initiative intends to enable sustainable food production for NASA’s Artemis Mission for lunar and Martian exploration. Our team has been tasked with designing a system for stabilizing and levelling the OASYS greenhouse that can withstand the lunar environment for a minimum of 6 weeks. The project involves CAD modelling, material selection (considering lunar temperatures, outgassing, and effects of lunar regolith), machine design of the necessary moving components, along with FEA and thermal analysis of the entire system.</p>
 
       
     </article>

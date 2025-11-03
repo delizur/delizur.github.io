@@ -7,10 +7,12 @@
   <meta name="description" content="Training a robot in simulation using computer vision and ML techniques.">
   <link rel="icon" href="/assets/favicon.png" />
   <style>
-  :root{--bg:#ffffff;--panel:#f8fafc;--text:#0f172a;--muted:#334155}
+  :root{--bg:#ffffff;--panel:#f8fafc;--text:#0f172a;--muted:#334155;--brand:#38bdf8;--accent:#c084fc;--ring:#22d3ee}
   body{margin:0;font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text);font-size:17px}
     header{background:var(--panel);padding:12px 16px;border-bottom:1px solid rgba(15,23,42,.06)}
   .nav{max-width:1000px;margin:auto;display:flex;align-items:center;justify-content:space-between}
+  .brand{display:flex;gap:10px;align-items:center;font-weight:700;letter-spacing:.3px}
+  .brand .dot{width:10px;height:10px;border-radius:999px;background:linear-gradient(135deg,#38bdf8,#c084fc);box-shadow:0 0 0 3px rgba(56,189,248,0.3)}
   .nav > div{display:flex;align-items:center;gap:8px}
   /* Improved icon sizing to avoid clipping and match homepage */
   .nav .icon, .pill .icon, svg.icon{width:20px;height:20px;display:inline-block;vertical-align:middle;overflow:visible}
@@ -25,6 +27,9 @@
   .btn{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:12px;background:linear-gradient(135deg,#38bdf8,#c084fc);color:#06131c;font-weight:700;border:none;cursor:pointer}
   .btn:focus{outline:3px solid #22d3ee}
     .nav a{color:inherit;text-decoration:none;margin-left:10px}
+    /* make nav links match homepage: padded, rounded, and show dashed outline on hover */
+    .nav a{padding:8px 10px;border-radius:10px}
+    .nav a:hover{outline:1px dashed color-mix(in oklab, var(--brand, #38bdf8) 40%, transparent)}
     main{max-width:1000px;margin:24px auto;padding:24px}
   .card{background:var(--panel);border-radius:12px;padding:20px;border:1px solid rgba(15,23,42,.04)}
   .back-home{display:inline-block;color:var(--muted);text-decoration:none;margin-bottom:12px}
@@ -54,14 +59,16 @@
 </head>
 <body>
   <header>
-    <nav class="nav">
-      <div><a href="/" style="color:inherit;text-decoration:none"><strong>Danny Elizur</strong></a></div>
-      <div>
-  <a href="/">Home</a>
-  <a href="/#projects">Projects</a>
+    <nav class="nav" aria-label="Primary">
+      <a class="brand" href="/"><span class="dot" aria-hidden="true"></span> <span>Danny Elizur</span></a>
+    <div class="row">
   <a href="/#about">About</a>
+  <a href="/#projects">Projects</a>
+  <a href="/#design-teams">Design Teams</a>
+  <a href="/#experience">Experience</a>
+  <a href="/#education">Education</a>
   <a href="/#contact">Contact</a>
-  <button id="theme" class="btn" aria-label="Toggle theme" style="margin-left:8px;font-size:0.95rem;padding:8px 10px"><svg class="icon" viewBox="-2 -2 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;vertical-align:middle;margin-right:6px"><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.41 1.41M16.95 16.95l1.41 1.41M5.64 18.36l1.41-1.41M16.95 7.05l1.41-1.41"/><circle cx="12" cy="12" r="5"/></svg><span style="vertical-align:middle">Theme</span></button>
+        <button id="theme" class="btn" aria-label="Toggle theme" style="margin-left:8px;font-size:0.95rem;padding:8px 10px"><svg class="icon" viewBox="-2 -2 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;vertical-align:middle;margin-right:6px"><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.41 1.41M16.95 16.95l1.41 1.41M5.64 18.36l1.41-1.41M16.95 7.05l1.41-1.41"/><circle cx="12" cy="12" r="5"/></svg><span style="vertical-align:middle">Theme</span></button>
       </div>
     </nav>
   </header>
@@ -70,7 +77,7 @@
     <article class="card">
       <div style="margin-bottom:8px"><a class="back-home" href="/">← Back to home</a></div>
       <h1>Machine Learning Robot</h1>
-      <p style="color:var(--muted);margin-top:6px">Simulated training with computer vision</p>
+      <p style="color:var(--muted);margin-top:6px">Line-following robot with simulated training using computer vision</p>
       <span class="tag">ROS</span><span class="tag">Linux Terminal</span><span class="tag">Machine Learning</span><span class="tag">Neural Networks</span><span class="tag">Python</span>
 
       <div class="gallery" style="margin:12px 0">
@@ -79,7 +86,7 @@
         <div class="figure-wrap"><div class="figure-empty" aria-hidden="true"></div><div class="caption"></div></div>
       </div>
 
-  <p style="color:var(--muted)">Notes: describe dataset, models, training pipeline, and results. Replace with details as you go.</p>
+  <p style="color:var(--muted)">Currently taking a project course on applied machine learning techniques. The course covers fully connected neural networks, convolutional neural networks (CNNs), reinforcement learning, imitation learning, as well as computer vision using SIFT (Scale-Invariant Feature Transform) and CNNs. The course culminates in a robot competition, where each team codes and trains a line-following robot to navigate an obstacle course while reading and processing image data on signposts along the way. The robots are programmed in ROS in a simulated Gazebo environment running on Linux. The robots are free to use any number of machine learning techniques to achieve the required competition tasks.</p>
 
       
     </article>

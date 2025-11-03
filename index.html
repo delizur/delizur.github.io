@@ -85,7 +85,20 @@
   .project:focus-visible{outline:3px solid color-mix(in oklab,var(--accent) 30%, transparent);outline-offset:6px}
   .project .thumb{aspect-ratio:16/9;border-radius:14px;background:#0a1622;display:grid;place-items:center;border:1px solid rgba(148,163,184,.18);overflow:hidden}
   /* ensure homepage thumbnails show the whole image and center it */
+  /* Thumbnail images: default behavior — fill the thumb area */
   .project .thumb img{width:100%;height:100%;object-fit:contain;object-position:center;display:block}
+  /* Exception: CSA logo — make bigger so it no longer looks tiny in the thumb. If you want it full-size, increase these values. */
+  .project .thumb img[alt="Canadian Space Agency"]{width:auto;height:auto;max-width:85%;max-height:85%;margin:0 auto;display:block;object-fit:contain;background:#000}
+
+  /* If a thumb is the CSA logo, make the thumb background black so the padding appears as requested. */
+  .project .thumb.thumb--csa{background:#000}
+
+  /* BIoT logo: give the image and its thumb a white background so the logo sits on white padding */
+  .project .thumb img[alt="UBC BIoT"]{width:auto;height:auto;max-width:85%;max-height:85%;margin:0 auto;display:block;object-fit:contain;background:#fff}
+  .project .thumb.thumb--biot{background:#fff}
+
+  /* Add a bit more vertical spacing under Projects and Design Teams so they're not crowded */
+  section#projects, section#design-teams{margin-bottom:88px}
     .project h3{margin:12px 0 6px}
     .project p{color:var(--muted);margin:0 0 10px}
   .meta{font-size:13px;color:var(--muted)}
@@ -155,11 +168,12 @@
     <nav class="nav" aria-label="Primary">
       <a class="brand" href="/"><span class="dot" aria-hidden="true"></span> <span>Danny Elizur</span></a>
       <div class="row">
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#experience">Experience</a>
-        <a href="#education">Education</a>
-        <a href="#contact">Contact</a>
+        <a href="/#about">About</a>
+        <a href="/#projects">Projects</a>
+        <a href="/#design-teams">Design Teams</a>
+        <a href="/#experience">Experience</a>
+        <a href="/#education">Education</a>
+        <a href="/#contact">Contact</a>
   <button id="theme" class="btn" aria-label="Toggle theme"><svg class="icon" viewBox="-2 -2 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.41 1.41M16.95 16.95l1.41 1.41M5.64 18.36l1.41-1.41M16.95 7.05l1.41-1.41"/><circle cx="12" cy="12" r="5"/></svg>Theme</button>
       </div>
     </nav>
@@ -216,7 +230,6 @@
         <!-- Robot Summer -->
         <article class="col-6 card project">
           <a class="thumb" href="/projects/autonomous-robot/" aria-label="Open Autonomous Robot page">
-            <!-- Replace with screenshot at /assets/projects/autonomous-robot.jpg -->
             <img src="/assets/Autonomous%20Robot/Marshall_Photo.jpg" alt="Autonomous Robot screenshot" />
           </a>
           <h3>Autonomous Robot Competition</h3>
@@ -229,7 +242,6 @@
         <!-- Guitar Project -->
         <article class="col-6 card project">
           <a class="thumb" href="/projects/guitar-project/" aria-label="Open Guitar Project page">
-            <!-- Replace with screenshot at /assets/projects/guitar-project.jpg -->
             <img src="/assets/Guitar%20Project/guitar_front.jpg" alt="Guitar Project screenshot" />
           </a>
           <h3>Electric Guitar</h3>
@@ -253,15 +265,33 @@
         </article>
         <!-- OASYS Project -->
         <article class="col-6 card project">
-          <a class="thumb" href="/projects/oasys-project/" aria-label="Open OASYS Project page">
-            <!-- No screenshot yet — intentionally left blank until you add a screenshot -->
-          </a>
+          <a class="thumb thumb--csa" href="/projects/oasys-project/" aria-label="Open OASYS Project page">
+              <img src="/assets/OASYS%20Project/CSA%20logo.jpg" alt="Canadian Space Agency" />
+            </a>
           <h3>Levelling System for a Lunar Greenhouse (In Progress)</h3>
           <p>Currently working alongside the Canadian Space Agency to develop a levelling system for the OASYS Lunar Greenhouse, a proposed design for sustainable food production on the moon.</p>
           <div>
           <span class="tag">Machine Design</span><span class="tag">Solid Mechanics</span><span class="tag">FEA</span><span class="tag">CAD</span>
           <a class="read-more" href="/projects/oasys-project/">Read more</a>
         </div>
+        </article>
+      </div>
+    </section>
+
+    
+    <section id="design-teams">
+      <h2>Design Teams</h2>
+      <div class="grid">
+        <article class="col-6 card project">
+        <a class="thumb thumb--biot" href="/design-teams/biot/" aria-label="Biological Internet of Things">
+          <img src="/assets/BIoT/biot-logo.png" alt="UBC BIoT" />
+        </a>
+          <h3>UBC Biological Internet of Things Team</h3>
+          <p>Design team using IoT technologies to monitor and control an automated beer brewing system.</p>
+          <div>
+            <span class="tag">Circuit Design</span><span class="tag">ESP32</span><span class="tag">PCB Design</span><span class="tag">I2C</span><span class="tag">MQTT</span>
+            <a class="read-more" href="/design-teams/biot/">Read more</a>
+          </div>
         </article>
       </div>
     </section>

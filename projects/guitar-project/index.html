@@ -7,10 +7,12 @@
   <meta name="description" content="Built a functional electric guitar from scratch using CNC and hand tools.">
   <link rel="icon" href="/assets/favicon.png" />
   <style>
-  :root{--bg:#ffffff;--panel:#f8fafc;--text:#0f172a;--muted:#334155}
+  :root{--bg:#ffffff;--panel:#f8fafc;--text:#0f172a;--muted:#334155;--brand:#38bdf8;--accent:#c084fc;--ring:#22d3ee}
   body{margin:0;font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text);font-size:17px}
     header{background:var(--panel);padding:12px 16px;border-bottom:1px solid rgba(15,23,42,.06)}
   .nav{max-width:1000px;margin:auto;display:flex;align-items:center;justify-content:space-between}
+  .brand{display:flex;gap:10px;align-items:center;font-weight:700;letter-spacing:.3px}
+  .brand .dot{width:10px;height:10px;border-radius:999px;background:linear-gradient(135deg,#38bdf8,#c084fc);box-shadow:0 0 0 3px rgba(56,189,248,0.3)}
   .nav > div{display:flex;align-items:center;gap:8px}
   /* Improved icon sizing to avoid clipping and match homepage */
   .nav .icon, .pill .icon, svg.icon{width:20px;height:20px;display:inline-block;vertical-align:middle;overflow:visible}
@@ -25,6 +27,9 @@
   .btn{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:12px;background:linear-gradient(135deg,#38bdf8,#c084fc);color:#06131c;font-weight:700;border:none;cursor:pointer}
   .btn:focus{outline:3px solid #22d3ee}
     .nav a{color:inherit;text-decoration:none;margin-left:10px}
+    /* match homepage nav link appearance/hover */
+    .nav a{padding:8px 10px;border-radius:10px}
+    .nav a:hover{outline:1px dashed color-mix(in oklab, var(--brand, #38bdf8) 40%, transparent)}
     main{max-width:1000px;margin:24px auto;padding:24px}
   .card{background:var(--panel);border-radius:12px;padding:20px;border:1px solid rgba(15,23,42,.04)}
   .back-home{display:inline-block;color:var(--muted);text-decoration:none;margin-bottom:12px}
@@ -59,13 +64,15 @@
 </head>
 <body>
   <header>
-    <nav class="nav">
-      <div><a href="/" style="color:inherit;text-decoration:none"><strong>Danny Elizur</strong></a></div>
-      <div>
-        <a href="/">Home</a>
-        <a href="/#projects">Projects</a>
-        <a href="/#about">About</a>
-        <a href="/#contact">Contact</a>
+    <nav class="nav" aria-label="Primary">
+      <a class="brand" href="/"><span class="dot" aria-hidden="true"></span> <span>Danny Elizur</span></a>
+    <div class="row">
+  <a href="/#about">About</a>
+  <a href="/#projects">Projects</a>
+  <a href="/#design-teams">Design Teams</a>
+  <a href="/#experience">Experience</a>
+  <a href="/#education">Education</a>
+  <a href="/#contact">Contact</a>
         <button id="theme" class="btn" aria-label="Toggle theme" style="margin-left:8px;font-size:0.95rem;padding:8px 10px"><svg class="icon" viewBox="-2 -2 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;vertical-align:middle;margin-right:6px"><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.41 1.41M16.95 16.95l1.41 1.41M5.64 18.36l1.41-1.41M16.95 7.05l1.41-1.41"/><circle cx="12" cy="12" r="5"/></svg><span style="vertical-align:middle">Theme</span></button>
       </div>
     </nav>
@@ -79,9 +86,9 @@
       <span class="tag">CNC</span><span class="tag">Engineering Drawings</span><span class="tag">Machine Debugging</span>
 
       <div class="gallery">
-          <div class="figure-wrap"><img src="/assets/Guitar%20Project/guitar_cut.jpg" alt="Guitar cut out of wooden stock"><div class="caption"></div></div>
-          <div class="figure-wrap"><img src="/assets/Guitar%20Project/guitar_front.jpg" alt="Front of guitar"><div class="caption"></div></div>
-          <div class="figure-wrap"><img src="/assets/Guitar%20Project/guitar_back.jpg" alt="Back of guitar"><div class="caption"></div></div>
+          <div class="figure-wrap"><img src="/assets/Guitar%20Project/guitar_cut.jpg" alt="Rough guitar shape cut by the CNC"><div class="caption"></div></div>
+          <div class="figure-wrap"><img src="/assets/Guitar%20Project/guitar_front.jpg" alt="Front of the guitar"><div class="caption"></div></div>
+          <div class="figure-wrap"><img src="/assets/Guitar%20Project/guitar_back.jpg" alt="Back of the guitar"><div class="caption"></div></div>
   </div>
 
   <p style="color:var(--muted)">I built a fully functioning electric guitar with the help of a wood CNC, wood routers, and hand tools. The body was cut from a solid piece of alder, with the rough shape cut by a CNC and finer shaping done with a router and hand files. The project gave me invaluable experience working with CNCs – setting up toolpaths and ensuring proper machine setup and operation. This project also developed my troubleshooting abilities, as well as resilience when dealing with frustrations in a project. There were numerous occasions when the CNC router I used would malfunction, effectively ruining the piece of wood I had carefully prepared. Through some digging on forums along with my own experimentation, I was able to find both mechanical and software issues in the machine, which caused it to behave irregularly. This project was an amazing opportunity for me to combine my engineering skills with my love for guitar. It also taught me that no matter what, there always exists a solution to a problem – it simply takes some perseverance and creativity to get there.</p>
@@ -90,57 +97,76 @@
     </article>
   </main>
 
-  <footer>
-    <div style="text-align:center;padding:16px;color:var(--muted)">© <span id="year">2025</span> Danny Elizur</div>
-  </footer>
   <script>
-    // Apply persisted theme from root site (if present) so project pages follow the site toggle.
-    (function(){
-      try{ const theme = localStorage.getItem('theme'); if(theme==='dark') document.documentElement.classList.add('dark'); else if(theme==='light') document.documentElement.classList.remove('dark'); }catch(e){}
-    })();
-    document.getElementById('year').textContent=new Date().getFullYear();
-    // Theme toggle on project pages: mirror the homepage behavior
-    (function(){
-      try{
-        const btn = document.getElementById('theme');
-        function applyTheme(t){ document.documentElement.classList.remove('light','dark'); if(t==='light') document.documentElement.classList.add('light'); else if(t==='dark') document.documentElement.classList.add('dark'); localStorage.setItem('theme', t); }
-        btn && btn.addEventListener('click', function(){ const cur = document.documentElement.classList.contains('light') ? 'light' : 'dark'; applyTheme(cur==='light' ? 'dark' : 'light'); });
-      }catch(e){}
-    })();
-    // populate image captions from img.alt or data-caption
-    (function(){
-        document.querySelectorAll('.figure-wrap').forEach(function(f){
-          const img = f.querySelector('img');
-          const cap = f.querySelector('.caption');
-          if(!img || !cap) return;
-          cap.textContent = img.getAttribute('data-caption') || img.alt || '';
-        });
+    // Light/Dark theme toggle (persists in localStorage)
+    const root = document.documentElement;
+    const themeBtn = document.getElementById('theme');
+    const setTheme = (t)=>{
+      root.classList.remove('light','dark');
+      if(t === 'light') root.classList.add('light');
+      else if(t === 'dark') root.classList.add('dark');
+      localStorage.setItem('theme', t);
+    }
+    const saved = localStorage.getItem('theme');
+    const defaultTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    setTheme(saved || defaultTheme);
+    themeBtn && themeBtn.addEventListener('click', ()=>{ const next = root.classList.contains('light') ? 'dark' : 'light'; setTheme(next); });
 
-        // Image lightbox modal (shared behavior)
-        (function(){
-          const modal = document.createElement('div'); modal.id = 'img-modal'; modal.className = 'img-modal'; modal.setAttribute('aria-hidden','true');
-          modal.innerHTML = `<div class="img-modal-content"><button id="img-close" class="img-close" aria-label="Close image">✕</button><img id="img-modal-img" alt=""/><div id="img-modal-caption" style="margin-top:8px;color:var(--muted)"></div></div>`;
-          document.body.appendChild(modal);
-    const style = document.createElement('style');
-    style.textContent = `
-    .img-modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,.6);z-index:10000;padding:24px}
-    .img-modal[aria-hidden="false"]{display:flex}
-    .img-modal-content{max-width:1000px;width:100%;background:transparent;border-radius:8px;text-align:center;display:flex;align-items:center;justify-content:center;flex-direction:column}
-    .img-modal-content img{max-width:100%;max-height:80vh;height:auto;object-fit:contain;border-radius:8px;margin:0 auto}
-    .img-close{position:absolute;right:28px;top:24px;background:transparent;border:0;color:#fff;font-size:28px;cursor:pointer}
-    `;
-          document.head.appendChild(style);
-          const imgEl = document.getElementById('img-modal-img');
-          const capEl = document.getElementById('img-modal-caption');
-          const imgClose = document.getElementById('img-close');
-          function openImg(src, alt){ imgEl.src = src; imgEl.alt = alt||''; capEl.textContent = alt||''; modal.setAttribute('aria-hidden','false'); }
-          function closeImg(){ modal.setAttribute('aria-hidden','true'); imgEl.src=''; }
-          document.querySelectorAll('.figure-wrap img').forEach(function(i){ i.style.cursor='zoom-in'; i.addEventListener('click', function(e){ e.preventDefault(); openImg(this.src, this.alt||''); }); });
-          imgClose.addEventListener('click', closeImg);
-          // close when clicking anywhere off the image (including modal backdrop or empty modal content areas)
-          modal.addEventListener('click', function(e){ if(e.target !== imgEl) closeImg(); });
-          document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeImg(); });
-        })();
+    // Current year (if present)
+    const yearEl = document.getElementById('year'); if(yearEl) yearEl.textContent = new Date().getFullYear();
+
+    // Make the entire project card clickable and keyboard-activatable.
+    document.addEventListener('DOMContentLoaded', function(){
+      document.querySelectorAll('.project').forEach(function(card){
+        const primaryAnchor = card.querySelector('a.thumb') || card.querySelector('.read-more');
+        if(!primaryAnchor) return;
+        card.style.cursor = 'pointer';
+        card.setAttribute('role', 'link');
+        card.tabIndex = 0;
+
+        function activate(){
+          const href = (card.querySelector('a.thumb') || card.querySelector('.read-more')).href;
+          if(href) window.location.href = href;
+        }
+
+        card.addEventListener('click', function(e){ if (e.target.closest('a, button')) return; activate(); });
+        card.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); activate(); } });
+      });
+    });
+
+    // populate image captions and create image lightbox modal
+    (function(){
+      document.querySelectorAll('.figure-wrap').forEach(function(f){
+        const img = f.querySelector('img');
+        const cap = f.querySelector('.caption');
+        if(!img || !cap) return;
+        cap.textContent = img.getAttribute('data-caption') || img.alt || '';
+      });
+
+      // Image lightbox modal (shared behavior)
+      (function(){
+        const modal = document.createElement('div'); modal.id = 'img-modal'; modal.className = 'img-modal'; modal.setAttribute('aria-hidden','true');
+        modal.innerHTML = `<div class="img-modal-content"><button id="img-close" class="img-close" aria-label="Close image">✕</button><img id="img-modal-img" alt=""/><div id="img-modal-caption" style="margin-top:8px;color:var(--muted)"></div></div>`;
+        document.body.appendChild(modal);
+        const style = document.createElement('style');
+        style.textContent = `
+          .img-modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,.6);z-index:10000;padding:24px}
+          .img-modal[aria-hidden="false"]{display:flex}
+          .img-modal-content{max-width:1000px;width:100%;background:transparent;border-radius:8px;text-align:center;display:flex;align-items:center;justify-content:center;flex-direction:column}
+          .img-modal-content img{max-width:100%;max-height:80vh;height:auto;object-fit:contain;border-radius:8px;margin:0 auto}
+          .img-close{position:absolute;right:28px;top:24px;background:transparent;border:0;color:#fff;font-size:28px;cursor:pointer}
+        `;
+        document.head.appendChild(style);
+        const imgEl = document.getElementById('img-modal-img');
+        const capEl = document.getElementById('img-modal-caption');
+        const imgClose = document.getElementById('img-close');
+        function openImg(src, alt){ imgEl.src = src; imgEl.alt = alt||''; capEl.textContent = alt||''; modal.setAttribute('aria-hidden','false'); }
+        function closeImg(){ modal.setAttribute('aria-hidden','true'); imgEl.src=''; }
+        document.querySelectorAll('.figure-wrap img').forEach(function(i){ i.style.cursor='zoom-in'; i.addEventListener('click', function(e){ e.preventDefault(); openImg(this.src, this.alt||''); }); });
+        imgClose && imgClose.addEventListener('click', closeImg);
+        modal.addEventListener('click', function(e){ if(e.target !== imgEl) closeImg(); });
+        document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeImg(); });
+      })();
     })();
   </script>
 </body>
