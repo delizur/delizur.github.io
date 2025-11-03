@@ -1,0 +1,108 @@
+:root{
+      --bg:#0b1016; --panel:#0f172a; --text:#e5e7eb; --muted:#cbd5e1; --brand:#38bdf8; --accent:#c084fc; --ring:#22d3ee;
+      --bg-light:#ffffff; --panel-light:#f8fafc; --text-light:#0f172a; --muted-light:#334155;
+      --radius:16px; --shadow:0 10px 30px rgba(2,8,23,.35); --maxw:1000px;
+    }
+      /* Tip: change --accent to adjust the 'pink' highlight used by contact pills and (now) top icons.
+         You can also increase the contrast by using a brighter color value here. */
+  html{scroll-behavior:smooth}
+  /* When the root has the 'light' class, swap variable values so uses of --muted pick the light-mode contrast. */
+  .light{ --muted: var(--muted-light); --panel: var(--panel-light); --text: var(--text-light); }
+  body{margin:0;font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Noto Sans, Apple Color Emoji, Segoe UI Emoji; line-height:1.6; background:var(--bg); color:var(--text); font-size:17px}
+    .light body{background:var(--bg-light); color:var(--text-light)}
+    header{position:sticky;top:0;backdrop-filter:saturate(180%) blur(8px); background:color-mix(in oklab, var(--panel) 80%, transparent); border-bottom:1px solid rgba(148,163,184,.15); z-index:50}
+    .light header{background:color-mix(in oklab, var(--panel-light) 80%, transparent);}
+    .nav{max-width:var(--maxw);margin:auto;display:flex;align-items:center;justify-content:space-between;padding:12px 16px}
+    .brand{display:flex;gap:10px;align-items:center;font-weight:700;letter-spacing:.3px}
+    .brand .dot{width:10px;height:10px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--accent));box-shadow:0 0 0 3px color-mix(in oklab, var(--brand) 30%, transparent)}
+    .nav a{color:inherit;text-decoration:none;padding:8px 10px;border-radius:10px}
+  /* Icon sizing and rendering improvements to avoid clipping */
+  .nav .icon, .pill .icon, svg.icon{width:18px;height:18px;display:inline-block;vertical-align:middle;overflow:visible}
+  svg.icon, .nav svg, .pill svg{overflow:visible}
+  .nav, .pill, .btn{overflow:visible;line-height:1;display:flex;align-items:center}
+  .pill svg, .btn svg{display:block}
+  /* Prevent stroke scaling artifacts that can visually cut lines off */
+  svg.icon *{vector-effect:non-scaling-stroke}
+  .nav a:hover{outline:1px dashed color-mix(in oklab, var(--brand) 40%, transparent)}
+  /* Primary button (used for résumé links) */
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--accent));color:#06131c;font-weight:700;border:none;cursor:pointer;transition:transform .14s ease, box-shadow .14s ease, filter .14s ease}
+  /* Hover: simple underline to indicate interactivity */
+   .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--accent));color:#06131c;font-weight:700;border:none;cursor:pointer;transition:transform .14s ease, box-shadow .14s ease, filter .14s ease;position:relative;overflow:visible}
+   /* underline implemented with a pseudo-element for consistent visibility */
+  .btn::after{content:'';position:absolute;left:12px;right:12px;bottom:8px;height:2px;background:#000;transform:scaleX(0);transform-origin:left center;transition:transform .16s ease,opacity .16s ease;border-radius:2px;opacity:0}
+   .btn:hover::after,.btn:focus::after{transform:scaleX(1);opacity:1}
+  /* keep :active empty intentionally — no transform on active */
+  .btn:focus{outline:3px solid var(--ring)}
+    main{max-width:var(--maxw);margin:24px auto;padding:24px}
+  section{margin:60px 0; scroll-margin-top:92px}
+
+    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center}
+  .card{background:color-mix(in oklab, var(--panel) 75%, transparent); border:1px solid rgba(148,163,184,.12); border-radius:var(--radius); box-shadow:var(--shadow); padding:24px; overflow:visible}
+    .light .card{background:var(--panel-light); border-color:#e2e8f0}
+    .hero h1{font-size:clamp(28px,4vw,44px);line-height:1.15;margin:0 0 8px}
+    h2 {
+  font-size: clamp(28px, 2.4vw, 36px); /* responsive size: min 28px, fluid, max 36px */
+  line-height: 1.2;
+  margin: 0 0 12px;
+  font-weight: 700;
+  color: var(--text); /* optional: uses your theme color */
+  scroll-margin-top:92px;
+}
+  .hero p{color:var(--muted);margin-top:8px;font-size:1.05rem;font-weight:500}
+    .tag{display:inline-block;font-size:12px;padding:4px 10px;border-radius:999px;border:1px solid rgba(148,163,184,.24);margin:8px 6px 0 0}
+
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+    .col-12{grid-column:span 12}
+    .col-6{grid-column:span 6}
+    .col-4{grid-column:span 4}
+    @media (max-width:900px){.hero{grid-template-columns:1fr}.col-6{grid-column:span 12}.col-4{grid-column:span 12}}
+
+    .project{display:flex;flex-direction:column;height:100%;position:relative;transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;will-change:transform}
+  .project{display:flex;flex-direction:column;height:100%}
+  /* Make project cards keyboard-focusable when clickable */
+  .project:focus{outline:3px solid color-mix(in oklab,var(--muted) 20%, transparent); outline-offset:4px}
+  /* Subtle hover/focus/active visual feedback for clickable cards */
+  .project:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(2,8,23,.45);border-color:rgba(148,163,184,.22)}
+  .project:active{transform:translateY(-2px)}
+  .project:focus-visible{outline:3px solid color-mix(in oklab,var(--accent) 30%, transparent);outline-offset:6px}
+  .project .thumb{aspect-ratio:16/9;border-radius:14px;background:#0a1622;display:grid;place-items:center;border:1px solid rgba(148,163,184,.18);overflow:hidden}
+  /* ensure homepage thumbnails show the whole image and center it */
+  /* Thumbnail images: default behavior — fill the thumb area */
+  .project .thumb img{width:100%;height:100%;object-fit:contain;object-position:center;display:block}
+  /* Exception: CSA logo — make bigger so it no longer looks tiny in the thumb. If you want it full-size, increase these values. */
+  .project .thumb img[alt="Canadian Space Agency"]{width:auto;height:auto;max-width:85%;max-height:85%;margin:0 auto;display:block;object-fit:contain;background:#000}
+
+  /* If a thumb is the CSA logo, make the thumb background black so the padding appears as requested. */
+  .project .thumb.thumb--csa{background:#000}
+
+  /* BIoT logo: give the image and its thumb a white background so the logo sits on white padding */
+  .project .thumb img[alt="UBC BIoT"]{width:auto;height:auto;max-width:85%;max-height:85%;margin:0 auto;display:block;object-fit:contain;background:#fff}
+  .project .thumb.thumb--biot{background:#fff}
+
+  /* Add a bit more vertical spacing under Projects and Design Teams so they're not crowded */
+  section#projects, section#design-teams{margin-bottom:88px}
+    .project h3{margin:12px 0 6px}
+    .project p{color:var(--muted);margin:0 0 10px}
+  .meta{font-size:13px;color:var(--muted)}
+  /* Read more link style (theme-aware: light text in dark mode, dark text in light mode) */
+  .read-more{display:block;margin-top:10px;font-size:1.05rem;font-weight:700;color:var(--text);text-decoration:none;transition:color .12s}
+  .read-more:focus,.read-more:hover{text-decoration:underline}
+
+    .list li{margin:8px 0}
+
+    footer{max-width:var(--maxw);margin:60px auto 24px;padding:0 24px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(148,163,184,.25),transparent);margin:40px 0}
+    .sr-only{position:absolute;clip:rect(1px,1px,1px,1px);padding:0;border:0;height:1px;width:1px;overflow:hidden}
+    .icon{width:18px;height:18px;display:inline-block}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .kicker{letter-spacing:.2em;text-transform:uppercase;font-size:12px;color:var(--muted)}
+    .muted{color:var(--muted)}
+  /* Ensure hero pills have enough vertical space so SVG strokes are not clipped */
+  .pill{display:inline-flex;gap:6px;align-items:center;justify-content:center;min-height:40px;padding:8px 10px;border:1px solid rgba(148,163,184,.24);border-radius:999px;text-decoration:none}
+  /* pill svgs should inherit the same icon size and styling as the top icons */
+  .pill svg{display:block}
+  .pill .icon-img{width:36px;height:36px}
+  /* Nudge top-row pills slightly to avoid any sub-pixel clipping in some browsers */
+  .row .pill svg{transform:translateY(1px)}
+  /* Top icon buttons: remove pill outline for hero icons and make icons a bit larger/clickable */
+  .icon-btn{display:inline-flex;align-items:center;justify-content:center;padding:6px;border:0;background:transparent;min-height:0;cursor:pointer;transition:color .12s,transform .12s}

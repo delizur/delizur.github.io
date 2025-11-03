@@ -1,0 +1,6 @@
+.figure-wrap{position:relative;border-radius:12px;overflow:hidden}
+.figure-wrap .caption{position:absolute;left:12px;right:12px;bottom:12px;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.92);color:#06131c;font-weight:600;font-size:13px;backdrop-filter:blur(4px)}
+html.dark .figure-wrap .caption,body.dark .figure-wrap .caption{background:rgba(6,10,16,.8);color:var(--text)}
+/* OASYS page keeps a slightly different logo sizing */
+.oasys-logo{max-width:220px}
+.project .thumb img{width:100%;height:100%;object-fit:contain;display:block}

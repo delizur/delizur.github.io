@@ -6,6 +6,7 @@
   <title>Autonomous Robot · Danny Elizur</title>
   <meta name="description" content="Designed and built a fully autonomous robot as part of a competition course.">
   <link rel="icon" href="/assets/favicon.png" />
+    <link rel="stylesheet" href="/assets/css/site-base.css">
     <style>
   :root{--bg:#ffffff;--panel:#f8fafc;--text:#0f172a;--muted:#334155;--brand:#38bdf8;--accent:#c084fc;--ring:#22d3ee}
   body{margin:0;font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text);font-size:17px}
@@ -82,6 +83,7 @@
     }
     html.dark, body.dark{--bg:#0b1220;--panel:#0f1724;--text:#e6eef8;--muted:#9fb2c9}
   </style>
+  <link rel="stylesheet" href="/assets/css/dark-caption-fix.css">
 </head>
 <body>
   <header>
@@ -146,7 +148,7 @@
       }catch(e){}
     })();
 
-    // Populate captions for images and videos, and wire image lightbox
+  // Populate captions for images and videos, and wire image lightbox
     (function(){
       document.querySelectorAll('.figure-wrap').forEach(function(f){
         const cap = f.querySelector('.caption');
@@ -185,6 +187,81 @@
       })();
         
     })();
+    
+    // Portrait/fullscreen video helper: ensure portrait videos open fullscreen without
+    // stretching and preserve intrinsic aspect ratio. Adds a small fullscreen button
+    // overlay and wires dblclick to request fullscreen. Uses native webkit fallback
+    // when available (iOS) and listens for fullscreenchange to apply containment styles.
+    (function(){
+      function tryRequestFull(v, wrap){
+        try{
+          // Prefer requesting fullscreen on the wrapper element when available.
+          // Some browsers (Chrome desktop) change how they display the video when
+          // the video element itself is fullscreen and may ignore CSS transforms
+          // or orientation metadata. Requesting fullscreen on the wrapper keeps
+          // the element tree intact and preserves inline CSS behavior.
+          var target = wrap || v;
+          if(target.requestFullscreen) return target.requestFullscreen();
+          if(target.webkitRequestFullscreen) return target.webkitRequestFullscreen();
+          // Fall back to the video-specific fullscreen call for older webkit
+          if(v.webkitEnterFullscreen) return v.webkitEnterFullscreen();
+        }catch(e){/* ignore */}
+      }
+
+      document.querySelectorAll('.figure-wrap video, main video, video').forEach(function(v){
+        function setup(){
+          // add small fullscreen button overlay to the figure-wrap if missing
+          var wrap = v.closest('.figure-wrap') || v.parentElement;
+          if(wrap){
+            wrap.style.position = wrap.style.position || 'relative';
+            if(!wrap.querySelector('.video-fullscreen-btn')){
+              var btn = document.createElement('button');
+              btn.type = 'button';
+              btn.className = 'video-fullscreen-btn';
+              btn.setAttribute('aria-label','Open video fullscreen');
+              btn.innerHTML = '\u21F2'; // diagonal arrows
+              btn.style.cssText = 'position:absolute;right:12px;top:12px;background:rgba(0,0,0,0.5);color:#fff;border:0;border-radius:6px;padding:6px 8px;cursor:pointer;z-index:20;font-size:14px;line-height:1';
+              btn.addEventListener('click', function(ev){ ev.stopPropagation(); tryRequestFull(v, wrap); });
+              wrap.appendChild(btn);
+            }
+          }
+
+          // dblclick on the video also requests fullscreen (desktop convenience)
+          v.addEventListener('dblclick', function(ev){ ev.stopPropagation(); tryRequestFull(v, wrap); });
+
+          // when entering fullscreen, force containment styling so portrait keeps aspect
+          function onFS(){
+            // fullscreenElement may be the wrapper or the video depending on browser
+            var fsEl = document.fullscreenElement || document.webkitFullscreenElement || document.webkitCurrentFullScreenElement;
+            var isFS = fsEl === v || fsEl === wrap;
+            if(isFS){
+              v.classList.add('in-fullscreen');
+              v.style.objectFit = 'contain';
+              v.style.width = 'auto';
+              v.style.height = 'auto';
+              v.style.maxHeight = '100vh';
+              v.style.maxWidth = '100vw';
+              // ensure background around video is dark for better letterboxing
+              try{ var parent = v.closest('.video-modal-content') || document.fullscreenElement || document.body; parent.style.background = parent.style.background || 'rgba(0,0,0,1)'; }catch(e){}
+            } else {
+              v.classList.remove('in-fullscreen');
+              v.style.removeProperty('object-fit');
+              v.style.removeProperty('width');
+              v.style.removeProperty('height');
+              v.style.removeProperty('max-height');
+              v.style.removeProperty('max-width');
+            }
+          }
+
+          document.addEventListener('fullscreenchange', onFS);
+          document.addEventListener('webkitfullscreenchange', onFS);
+          v.addEventListener('webkitbeginfullscreen', onFS);
+        }
+
+        if(v.readyState >= 1) setup(); else v.addEventListener('loadedmetadata', setup);
+      });
+    })();
   </script>
+  <script src="/assets/js/theme-toggle.js"></script>
 </body>
 </html>

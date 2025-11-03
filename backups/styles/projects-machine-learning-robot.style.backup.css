@@ -1,0 +1,10 @@
+.video-inline{border-radius:12px;overflow:hidden;background:#000}
+.video-inline video{width:100%;height:auto;display:block}
+.figure-wrap{position:relative;border-radius:12px;overflow:hidden}
+.figure-wrap .caption{position:absolute;left:12px;right:12px;bottom:12px;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.92);color:#06131c;font-weight:600;font-size:13px;backdrop-filter:blur(4px)}
+html.dark .figure-wrap .caption,body.dark .figure-wrap .caption{background:rgba(6,10,16,.8);color:var(--text)}
+/* demo grid */
+.demo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:900px){.demo-grid{grid-template-columns:1fr}}
+/* small helper for video captions placed outside of figures */
+.video-caption{font-size:13px;color:var(--muted);margin-top:6px}

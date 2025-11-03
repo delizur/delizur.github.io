@@ -1,0 +1,16 @@
+/* Centralized dark-mode caption fix
+   Ensures image captions use a dark semi-opaque background and light text
+   when system dark mode is active or when the site forces dark with html.dark/body.dark
+*/
+@media (prefers-color-scheme: dark){
+  .figure-wrap .caption{
+    background: rgba(6,10,16,0.8) !important;
+    color: var(--text, #fff) !important;
+  }
+}
+
+html.dark .figure-wrap .caption,
+body.dark .figure-wrap .caption{
+  background: rgba(6,10,16,0.8) !important;
+  color: var(--text, #fff) !important;
+}

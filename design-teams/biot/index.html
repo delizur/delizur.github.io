@@ -6,6 +6,7 @@
   <title>UBC BIoT · Danny Elizur</title>
   <meta name="description" content="UBC Biological Internet of Things — instrumentation and monitoring." />
   <link rel="icon" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/css/site-base.css">
   <style>
   :root{--bg:#ffffff;--panel:#f8fafc;--text:#0f172a;--muted:#334155;--brand:#38bdf8;--accent:#c084fc;--ring:#22d3ee}
   body{margin:0;font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text);font-size:17px}
@@ -14,9 +15,9 @@
   .brand{display:flex;gap:10px;align-items:center;font-weight:700;letter-spacing:.3px}
   .brand .dot{width:10px;height:10px;border-radius:999px;background:linear-gradient(135deg,#38bdf8,#c084fc);box-shadow:0 0 0 3px rgba(56,189,248,0.3)}
   .nav > div{display:flex;align-items:center;gap:8px}
-  /* match homepage nav link appearance/hover */
+  /* match homepage nav link appearance/hover
   .nav a{padding:8px 10px;border-radius:10px}
-  .nav a:hover{outline:1px dashed color-mix(in oklab, var(--brand, #38bdf8) 40%, transparent)}
+  .nav a:hover{outline:1px dashed color-mix(in oklab, var(--brand, #38bdf8) 40%, transparent)} */
   /* Improved icon sizing to avoid clipping and match homepage */
   .nav .icon, .pill .icon, svg.icon{width:20px;height:20px;display:inline-block;vertical-align:middle;overflow:visible}
   /* Ensure SVGs inside nav/pill/button are not clipped and align nicely */
@@ -33,6 +34,9 @@
   .btn::after{content:'';position:absolute;left:8px;right:8px;bottom:6px;height:2px;background:#000;transform:scaleX(0);transform-origin:left center;transition:transform .16s ease,opacity .16s ease;border-radius:2px;opacity:0}
   .btn:hover::after,.btn:focus::after{transform:scaleX(1);opacity:1}
     .nav a{color:inherit;text-decoration:none;margin-left:10px}
+    /* make nav links match homepage: padded, rounded, and show dashed outline on hover */
+    .nav a{padding:8px 10px;border-radius:10px}
+    .nav a:hover{outline:1px dashed color-mix(in oklab, var(--brand, #38bdf8) 40%, transparent)}
     main{max-width:1000px;margin:24px auto;padding:24px}
   .card{background:var(--panel);border-radius:12px;padding:20px;border:1px solid rgba(15,23,42,.04)}
   .back-home{display:inline-block;color:var(--muted);text-decoration:none;margin-bottom:12px}
@@ -62,6 +66,7 @@
     }
     html.dark, body.dark{--bg:#0b1220;--panel:#0f1724;--text:#e6eef8;--muted:#9fb2c9}
   </style>
+  <link rel="stylesheet" href="/assets/css/dark-caption-fix.css">
 </head>
 <body>
   <header>
@@ -142,5 +147,6 @@
       })();
     })();
   </script>
+  <script src="/assets/js/theme-toggle.js"></script>
 </body>
 </html>

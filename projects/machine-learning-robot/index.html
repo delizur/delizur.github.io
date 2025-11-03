@@ -6,6 +6,7 @@
   <title>Machine Learning Robot · Danny Elizur</title>
   <meta name="description" content="Training a robot in simulation using computer vision and ML techniques.">
   <link rel="icon" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/css/site-base.css">
   <style>
   :root{--bg:#ffffff;--panel:#f8fafc;--text:#0f172a;--muted:#334155;--brand:#38bdf8;--accent:#c084fc;--ring:#22d3ee}
   body{margin:0;font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text);font-size:17px}
@@ -56,6 +57,7 @@
     }
     html.dark, body.dark{--bg:#0b1220;--panel:#0f1724;--text:#e6eef8;--muted:#9fb2c9}
   </style>
+  <link rel="stylesheet" href="/assets/css/dark-caption-fix.css">
 </head>
 <body>
   <header>
@@ -83,27 +85,27 @@
       <div class="gallery" style="margin:12px 0">
         <!-- Embedded demo videos from assets (play inline). Posters omitted to allow browser to show first frame when available. -->
         <div class="figure-wrap">
-          <video controls muted playsinline preload="metadata" data-caption="SIFT demo" style="width:100%;height:100%;display:block;border-radius:8px;object-fit:contain">
+          <video controls muted playsinline preload="metadata" data-caption="SIFT algorithm demo" style="width:100%;height:100%;display:block;border-radius:8px;object-fit:contain">
             <source src="/assets/Machine Learning Robot/SIFT_demo.mp4" type="video/mp4">
             Your browser does not support the video tag.
           </video>
-          <div class="caption">SIFT demo</div>
+          <div class="caption">SIFT algorithm demo</div>
         </div>
 
         <div class="figure-wrap">
-          <video controls muted playsinline preload="metadata" data-caption="RL line-following demo" style="width:100%;height:100%;display:block;border-radius:8px;object-fit:contain">
+          <video controls muted playsinline preload="metadata" data-caption="Line-following robot using reinforcement learning" style="width:100%;height:100%;display:block;border-radius:8px;object-fit:contain">
             <source src="/assets/Machine Learning Robot/RL_linefollowing_demo.mp4" type="video/mp4">
             Your browser does not support the video tag.
           </video>
-          <div class="caption">RL line-following demo</div>
+          <div class="caption">Line-following robot using reinforcement learning</div>
         </div>
 
         <div class="figure-wrap">
-          <video controls muted playsinline preload="metadata" data-caption="Inverted pendulum demo" style="width:100%;height:100%;display:block;border-radius:8px;object-fit:contain">
+          <video controls muted playsinline preload="metadata" data-caption="Inverted pendulum training using reinforcement learning and CNNs" style="width:100%;height:100%;display:block;border-radius:8px;object-fit:contain">
             <source src="/assets/Machine Learning Robot/inverted_pendulum_demo.mp4" type="video/mp4">
             Your browser does not support the video tag.
           </video>
-          <div class="caption">Inverted pendulum demo</div>
+          <div class="caption">Inverted pendulum training using reinforcement learning and CNNs</div>
         </div>
       </div>
 
@@ -166,5 +168,6 @@
       })();
     })();
   </script>
+  <script src="/assets/js/theme-toggle.js"></script>
 </body>
 </html>

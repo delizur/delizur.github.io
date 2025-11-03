@@ -1,0 +1,85 @@
+/* site-base.css — conservative shared styles extracted from inline page styles
+   Purpose: provide common CSS variables, layout scaffolding, and small component defaults.
+   This file is intentionally minimal so pages can keep per-page overrides in their inline <style> blocks. */
+:root{
+  --bg:#0b1016;
+  --panel:#0f172a;
+  --text:#e5e7eb;
+  --muted:#cbd5e1;
+  --brand:#38bdf8;
+  --accent:#c084fc;
+  --ring:#22d3ee;
+  --bg-light:#ffffff;
+  --panel-light:#f8fafc;
+  --text-light:#0f172a;
+  --muted-light:#334155;
+  --radius:16px;
+  --shadow:0 10px 30px rgba(2,8,23,.35);
+  --maxw:1000px;
+}
+
+/* light-mode helper when pages toggle a root class */
+html.light{ --muted:var(--muted-light); --panel:var(--panel-light); --text:var(--text-light); }
+
+/* Basic page setup */
+html{scroll-behavior:smooth}
+body{margin:0;font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";line-height:1.6;background:var(--bg);color:var(--text);font-size:17px}
+
+main{max-width:var(--maxw);margin:24px auto;padding:24px}
+
+/* Header / nav scaffold */
+header{position:sticky;top:0;backdrop-filter:saturate(180%) blur(8px);background:color-mix(in oklab,var(--panel) 80%,transparent);border-bottom:1px solid rgba(148,163,184,.15);z-index:50}
+.light header{background:color-mix(in oklab,var(--panel-light) 80%,transparent)}
+.nav{max-width:var(--maxw);margin:auto;display:flex;align-items:center;justify-content:space-between;padding:12px 16px}
+.brand{display:flex;gap:10px;align-items:center;font-weight:700}
+.brand .dot{width:10px;height:10px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--accent))}
+
+/* Buttons, pills and small interactive elements */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--accent));color:#06131c;font-weight:700;border:none;cursor:pointer;transition:transform .14s ease;position:relative}
+.btn:focus{outline:3px solid var(--ring)}
+
+/* Ensure underline behaves identically across pages: prevent parent scaling from changing
+  the visual thickness during the hover animation and use currentColor so the line
+  always matches the button text color. Using will-change and a 2D transform hint
+  avoids render jitter on some browsers. */
+.btn:hover,.btn:focus{transform:none !important}
+.pill{display:inline-flex;gap:6px;align-items:center;justify-content:center;min-height:40px;padding:8px 10px;border:1px solid rgba(148,163,184,.24);border-radius:999px;text-decoration:none}
+
+/* Icon helpers: keep svgs visible and avoid stroke-scaling issues */
+.icon, svg.icon{width:18px;height:18px;display:inline-block;vertical-align:middle;overflow:visible}
+svg *{vector-effect:non-scaling-stroke}
+
+/* Card & grid scaffolding */
+.card{background:color-mix(in oklab,var(--panel) 75%,transparent);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px}
+.light .card{background:var(--panel-light)}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.col-12{grid-column:span 12}
+.col-6{grid-column:span 6}
+.col-4{grid-column:span 4}
+@media (max-width:900px){.hero{grid-template-columns:1fr}.col-6,.col-4{grid-column:span 12}}
+
+/* Project card defaults (conservative) */
+.project{display:flex;flex-direction:column;height:100%;position:relative;transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;}
+.project:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(2,8,23,.45);}
+.project:active{transform:translateY(-2px)}
+.project:focus-visible{outline:3px solid color-mix(in oklab,var(--accent) 30%,transparent);outline-offset:6px}
+.project .thumb{aspect-ratio:16/9;border-radius:14px;background:#0a1622;display:grid;place-items:center;border:1px solid rgba(148,163,184,.18);overflow:hidden}
+.project .thumb img,.project .thumb video{width:100%;height:100%;object-fit:contain;object-position:center;display:block}
+
+/* Figure/caption defaults — dark caption fix is still kept as a separate file for safety, but provide a sensible base here */
+.figure-wrap{position:relative;border-radius:12px;overflow:hidden}
+.figure-wrap .caption{position:absolute;left:12px;right:12px;bottom:12px;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.92);color:#06131c;font-weight:600;font-size:13px;backdrop-filter:blur(4px)}
+
+/* Underline pseudo-element for .btn (anchored to the button via position:relative above) */
+.btn::after{content:'';position:absolute;left:12px;right:12px;bottom:8px;height:2px;background:currentColor;transform:translateZ(0) scaleX(0);transform-origin:left center;transition:transform .16s cubic-bezier(.2,.9,.2,1),opacity .16s ease;border-radius:2px;opacity:0;pointer-events:none;will-change:transform,opacity;box-shadow:none}
+.btn:hover::after,.btn:focus::after{transform:translateZ(0) scaleX(1);opacity:1}
+
+/* Small utility classes */
+.kicker{letter-spacing:.2em;text-transform:uppercase;font-size:12px;color:var(--muted)}
+.muted{color:var(--muted)}
+.meta{font-size:13px;color:var(--muted)}
+
+/* Footer layout */
+footer{max-width:var(--maxw);margin:60px auto 24px;padding:0 24px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+/* Keep this file tiny by design; pages are free to override specific rules inline */
