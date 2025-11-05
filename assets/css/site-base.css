@@ -70,6 +70,38 @@ svg *{vector-effect:non-scaling-stroke}
 .figure-wrap{position:relative;border-radius:12px;overflow:hidden}
 .figure-wrap .caption{position:absolute;left:12px;right:12px;bottom:12px;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.92);color:#06131c;font-weight:600;font-size:13px;backdrop-filter:blur(4px)}
 
+/* Improve caption readability when media is shown in a modal or fullscreen.
+   Use a dark translucent background and white text so captions are legible
+   against bright images. Include vendor/fullscreen variants for coverage. */
+.img-modal #img-modal-caption,
+.img-modal[aria-hidden="false"] #img-modal-caption,
+.figure-wrap:fullscreen .caption,
+.figure-wrap:-webkit-full-screen .caption,
+.figure-wrap video:fullscreen ~ .caption,
+.figure-wrap video:-webkit-full-screen ~ .caption{
+  position:relative;left:auto;right:auto;bottom:auto;margin-top:12px;display:inline-block;
+  background:rgba(0,0,0,0.6);color:#fff;padding:8px 12px;border-radius:8px;backdrop-filter:blur(6px);
+  max-width:calc(100% - 48px);font-weight:600;font-size:14px;line-height:1.2
+}
+
+/* In light mode we prefer a light background for captions in fullscreen/modal
+   so they contrast against dark areas of the image and remain readable. This
+   selector targets both html.light and body.light variants that pages may set. */
+html.light .img-modal #img-modal-caption,
+body.light .img-modal #img-modal-caption,
+html.light .img-modal[aria-hidden="false"] #img-modal-caption,
+body.light .img-modal[aria-hidden="false"] #img-modal-caption,
+html.light .figure-wrap:fullscreen .caption,
+body.light .figure-wrap:fullscreen .caption,
+html.light .figure-wrap:-webkit-full-screen .caption,
+body.light .figure-wrap:-webkit-full-screen .caption,
+html.light .figure-wrap video:fullscreen ~ .caption,
+body.light .figure-wrap video:fullscreen ~ .caption,
+html.light .figure-wrap video:-webkit-full-screen ~ .caption,
+body.light .figure-wrap video:-webkit-full-screen ~ .caption{
+  background:rgba(255,255,255,0.92); color:#06131c; backdrop-filter:blur(4px);
+}
+
 /* Underline pseudo-element for .btn (anchored to the button via position:relative above) */
 .btn::after{content:'';position:absolute;left:12px;right:12px;bottom:8px;height:2px;background:currentColor;transform:translateZ(0) scaleX(0);transform-origin:left center;transition:transform .16s cubic-bezier(.2,.9,.2,1),opacity .16s ease;border-radius:2px;opacity:0;pointer-events:none;will-change:transform,opacity;box-shadow:none}
 .btn:hover::after,.btn:focus::after{transform:translateZ(0) scaleX(1);opacity:1}
@@ -83,3 +115,71 @@ svg *{vector-effect:non-scaling-stroke}
 footer{max-width:var(--maxw);margin:60px auto 24px;padding:0 24px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 
 /* Keep this file tiny by design; pages are free to override specific rules inline */
+
+/* Mobile / touch optimizations -------------------------------------------------- */
+/* Increase tappable areas, stack the header, and make media scale reliably */
+button, .btn, a{touch-action:manipulation;-webkit-tap-highlight-color:rgba(0,0,0,0.12)}
+
+/* Larger hit targets for buttons on small screens (applied only at small widths) */
+
+/* Responsive nav: stack links on narrow screens and make them easy to tap */
+@media (max-width:900px){
+  .nav{flex-direction:column;align-items:flex-start;padding:10px 12px;gap:8px}
+  /* Keep the brand dot and name together on the left in mobile. Don't stretch the
+     brand to full width or use space-between (that pushed the name to the far right). */
+  .nav .brand{width:auto;display:flex;justify-content:flex-start;align-items:center}
+  .nav > div{width:100%;display:flex;flex-wrap:wrap;gap:8px}
+  .nav a{padding:10px 12px;border-radius:8px;width:auto}
+}
+
+/* Make figures and media become full-width on small screens so content is readable */
+@media (max-width:700px){
+  html{font-size:15px}
+  body{font-size:15px}
+  main{padding:16px;margin:16px auto}
+  /* Mobile-only: slightly reduced hit targets compared with earlier increase so
+    buttons aren't overly large on smaller phones while remaining tappable. */
+  .btn{min-height:40px;padding:8px 12px}
+  /* Ensure the header theme button and hero resume button are also slightly
+    reduced on mobile for visual parity. */
+  .nav #theme.btn, .hero .row .btn{padding:8px 12px}
+  /* Tweak: reduce vertical padding for the hero resume button specifically so
+    the label isn't surrounded by excessive space on small phones. Keep
+    horizontal padding consistent for visual balance. */
+  /* Make the hero resume button even smaller on very small screens while
+    keeping it tappable. Use !important to override any competing rules. */
+  .hero .row .btn{padding:4px 10px !important; min-height:34px !important; line-height:1 !important; font-size:0.98rem}
+  .figure-wrap{flex-basis:100% !important;max-width:100% !important;aspect-ratio:16/9!important}
+  .project .thumb{aspect-ratio:16/9}
+  .card{padding:16px}
+  .grid{gap:12px}
+  .col-6,.col-4{grid-column:span 12}
+  .video-fullscreen-btn{right:10px;top:10px;padding:8px}
+}
+
+/* Fix anchor jump position on mobile: the header stacks and becomes taller which
+   causes in-page anchors to land lower than the section start. Use scroll-padding
+   to offset the scroller so targets appear at the very top of the viewport. */
+@media (max-width:900px){
+  /* scroll-padding-top is tied to a JS-updated CSS variable (--scroll-padding-top)
+     so the page will correctly offset anchors based on the actual header height. */
+  html{scroll-padding-top:var(--scroll-padding-top,120px)}
+}
+
+/* Ensure media scales cleanly and doesn't overflow on small viewports */
+img, video{max-width:100%;height:auto;border-radius:inherit}
+
+/* Prefer object-fit:cover for thumbnails but keep contain for demos where needed
+   (pages can still override per-figure). */
+.thumb img, .thumb video{object-fit:cover}
+
+/* Restore original smaller résumé button sizing on the homepage hero row so the
+  download box appears as before. Keeps global .btn larger for mobile tap targets
+  but preserves the desktop hero visual. */
+.hero .row .btn{padding:10px 14px}
+
+/* Restore the original theme button underline color and sizing for the header
+  so it visually matches the homepage default before global mobile tweaks. */
+.nav #theme.btn::after{background:#000}
+.nav #theme.btn{padding:10px 14px}
+

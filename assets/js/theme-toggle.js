@@ -61,9 +61,86 @@
 
   // Initialize immediately if DOM is ready, otherwise on DOMContentLoaded
   if(document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', function(){ attachHandler(); applyInitialTheme(); });
+    document.addEventListener('DOMContentLoaded', function(){ attachHandler(); applyInitialTheme(); initHeaderOffset(); });
   } else {
-    attachHandler(); applyInitialTheme();
+    attachHandler(); applyInitialTheme(); initHeaderOffset();
   }
+
+  // Measure the header height and set a CSS variable so scroll-padding-top can
+  // be dynamic and match the actual header size (works across mobile/desktop).
+  function initHeaderOffset(){
+    try{
+      var header = document.querySelector('header');
+      if(!header) return;
+      var setVar = function(){
+        try{
+          var h = Math.ceil(header.getBoundingClientRect().height || header.offsetHeight || 0);
+          // add a small extra gap so the section's start isn't flush against header
+          var offset = h + 6;
+          // set the CSS variable on both root and body to cover browsers that
+          // treat the scrolling element differently.
+          try{ document.documentElement.style.setProperty('--scroll-padding-top', offset + 'px'); }catch(e){}
+          try{ document.body && document.body.style.setProperty('--scroll-padding-top', offset + 'px'); }catch(e){}
+        }catch(e){}
+      };
+      // run once immediately
+      setVar();
+  // If there's a hash in the URL (direct link or back/forward), adjust scroll
+  // so the target appears correctly under the header. Run after a short
+  // timeout to allow the browser's native anchor jump first, then nudge.
+  setTimeout(function(){ adjustScrollToHash(); }, 50);
+      // update on resizes and orientation changes
+      var resizeDebounce;
+      window.addEventListener('resize', function(){ clearTimeout(resizeDebounce); resizeDebounce = setTimeout(setVar, 120); });
+      window.addEventListener('orientationchange', function(){ setTimeout(setVar, 120); });
+      // use a ResizeObserver to catch header content changes (safer than polling)
+      if(window.ResizeObserver){
+        try{
+          var ro = new ResizeObserver(function(){ setVar(); });
+          ro.observe(header);
+        }catch(e){}
+      }
+    }catch(e){}
+  }
+
+  // Scroll adjustment fallback: if the browser doesn't honor scroll-padding-top
+  // for anchor jumps, compute and perform a scroll to the element minus header.
+  function adjustScrollToHash(){
+    try{
+      var hash = location.hash && location.hash.replace(/^#/, '');
+      if(!hash) return;
+      var el = document.getElementById(hash);
+      if(!el) return;
+      var header = document.querySelector('header');
+      var h = header ? Math.ceil(header.getBoundingClientRect().height || header.offsetHeight || 0) : 0;
+      var extra = 6;
+      var top = el.getBoundingClientRect().top + window.scrollY - h - extra;
+      window.scrollTo({ top: Math.max(0, Math.floor(top)), left: 0 });
+    }catch(e){}
+  }
+
+  // Intercept nav anchor clicks (internal hashes) to perform the adjusted scroll
+  // immediately instead of relying on the browser's native fragment jump.
+  function interceptNavAnchors(){
+    try{
+      document.querySelectorAll('a[href^="#"]').forEach(function(a){
+        a.addEventListener('click', function(ev){
+          var href = a.getAttribute('href') || '';
+          if(!href.startsWith('#')) return;
+          var id = href.replace(/^#/, '');
+          var target = document.getElementById(id);
+          if(!target) return;
+          ev.preventDefault();
+          // update URL without jumping
+          history.pushState(null, '', '#' + id);
+          // perform adjusted scroll
+          setTimeout(adjustScrollToHash, 0);
+        });
+      });
+    }catch(e){}
+  }
+
+  // run interceptors once DOM ready
+  try{ if(document.readyState === 'complete' || document.readyState === 'interactive') interceptNavAnchors(); else document.addEventListener('DOMContentLoaded', interceptNavAnchors); }catch(e){}
 
 })();
