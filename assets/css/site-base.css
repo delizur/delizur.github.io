@@ -58,7 +58,7 @@ svg *{vector-effect:non-scaling-stroke}
 .col-4{grid-column:span 4}
 @media (max-width:900px){.hero{grid-template-columns:1fr}.col-6,.col-4{grid-column:span 12}}
 
-/* Project card defaults (conservative) */
+/* Project card defaults*/
 .project{display:flex;flex-direction:column;height:100%;position:relative;transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;}
 .project:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(2,8,23,.45);}
 .project:active{transform:translateY(-2px)}
@@ -66,13 +66,13 @@ svg *{vector-effect:non-scaling-stroke}
 .project .thumb{aspect-ratio:16/9;border-radius:14px;background:#0a1622;display:grid;place-items:center;border:1px solid rgba(148,163,184,.18);overflow:hidden}
 .project .thumb img,.project .thumb video{width:100%;height:100%;object-fit:contain;object-position:center;display:block}
 
-/* Figure/caption defaults — dark caption fix is still kept as a separate file for safety, but provide a sensible base here */
+/* Figure/caption defaults*/
 .figure-wrap{position:relative;border-radius:12px;overflow:hidden}
 .figure-wrap .caption{position:absolute;left:12px;right:12px;bottom:12px;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.92);color:#06131c;font-weight:600;font-size:13px;backdrop-filter:blur(4px)}
 
 /* Improve caption readability when media is shown in a modal or fullscreen.
    Use a dark translucent background and white text so captions are legible
-   against bright images. Include vendor/fullscreen variants for coverage. */
+   against bright images. */
 .img-modal #img-modal-caption,
 .img-modal[aria-hidden="false"] #img-modal-caption,
 .figure-wrap:fullscreen .caption,
@@ -84,7 +84,7 @@ svg *{vector-effect:non-scaling-stroke}
   max-width:calc(100% - 48px);font-weight:600;font-size:14px;line-height:1.2
 }
 
-/* In light mode we prefer a light background for captions in fullscreen/modal
+/* In light mode, prefer a light background for captions in fullscreen/modal
    so they contrast against dark areas of the image and remain readable. This
    selector targets both html.light and body.light variants that pages may set. */
 html.light .img-modal #img-modal-caption,
@@ -120,13 +120,10 @@ footer{max-width:var(--maxw);margin:60px auto 24px;padding:0 24px;color:var(--mu
 /* Increase tappable areas, stack the header, and make media scale reliably */
 button, .btn, a{touch-action:manipulation;-webkit-tap-highlight-color:rgba(0,0,0,0.12)}
 
-/* Larger hit targets for buttons on small screens (applied only at small widths) */
-
 /* Responsive nav: stack links on narrow screens and make them easy to tap */
 @media (max-width:900px){
   .nav{flex-direction:column;align-items:flex-start;padding:10px 12px;gap:8px}
-  /* Keep the brand dot and name together on the left in mobile. Don't stretch the
-     brand to full width or use space-between (that pushed the name to the far right). */
+  /* Keep the brand dot and name together on the left in mobile. */
   .nav .brand{width:auto;display:flex;justify-content:flex-start;align-items:center}
   .nav > div{width:100%;display:flex;flex-wrap:wrap;gap:8px}
   .nav a{padding:10px 12px;border-radius:8px;width:auto}
@@ -143,11 +140,8 @@ button, .btn, a{touch-action:manipulation;-webkit-tap-highlight-color:rgba(0,0,0
   /* Ensure the header theme button and hero resume button are also slightly
     reduced on mobile for visual parity. */
   .nav #theme.btn, .hero .row .btn{padding:8px 12px}
-  /* Tweak: reduce vertical padding for the hero resume button specifically so
-    the label isn't surrounded by excessive space on small phones. Keep
+  /* Tweak: reduce vertical padding for the hero resume button. Keep
     horizontal padding consistent for visual balance. */
-  /* Make the hero resume button even smaller on very small screens while
-    keeping it tappable. Use !important to override any competing rules. */
   .hero .row .btn{padding:4px 10px !important; min-height:34px !important; line-height:1 !important; font-size:0.98rem}
   .figure-wrap{flex-basis:100% !important;max-width:100% !important;aspect-ratio:16/9!important}
   .project .thumb{aspect-ratio:16/9}
@@ -157,9 +151,7 @@ button, .btn, a{touch-action:manipulation;-webkit-tap-highlight-color:rgba(0,0,0
   .video-fullscreen-btn{right:10px;top:10px;padding:8px}
 }
 
-/* Fix anchor jump position on mobile: the header stacks and becomes taller which
-   causes in-page anchors to land lower than the section start. Use scroll-padding
-   to offset the scroller so targets appear at the very top of the viewport. */
+/* Fix anchor jump position on mobile.*/
 @media (max-width:900px){
   /* scroll-padding-top is tied to a JS-updated CSS variable (--scroll-padding-top)
      so the page will correctly offset anchors based on the actual header height. */
@@ -173,13 +165,12 @@ img, video{max-width:100%;height:auto;border-radius:inherit}
    (pages can still override per-figure). */
 .thumb img, .thumb video{object-fit:cover}
 
-/* Restore original smaller résumé button sizing on the homepage hero row so the
+/* Résumé button sizing on the homepage hero row same as non-mobile so the
   download box appears as before. Keeps global .btn larger for mobile tap targets
   but preserves the desktop hero visual. */
 .hero .row .btn{padding:10px 14px}
 
-/* Restore the original theme button underline color and sizing for the header
-  so it visually matches the homepage default before global mobile tweaks. */
+/* Theme button underline color and sizing for the header visually matches the homepage default. */
 .nav #theme.btn::after{background:#000}
 .nav #theme.btn{padding:10px 14px}
 

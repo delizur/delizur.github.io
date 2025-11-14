@@ -6,7 +6,6 @@
   <title>Danny Elizur · Portfolio</title>
   <meta name="description" content="Danny Elizur — portfolio, projects, and contact." />
   <meta name="theme-color" content="#0ea5e9" />
-  <!-- Open Graph / Twitter -->
   <meta property="og:title" content="Danny Elizur · Portfolio" />
   <meta property="og:description" content="Projects, experience, and contact." />
   <meta property="og:type" content="website" />
@@ -22,8 +21,7 @@
       --bg-light:#ffffff; --panel-light:#f8fafc; --text-light:#0f172a; --muted-light:#334155;
       --radius:16px; --shadow:0 10px 30px rgba(2,8,23,.35); --maxw:1000px;
     }
-      /* Tip: change --accent to adjust the 'pink' highlight used by contact pills and (now) top icons.
-         You can also increase the contrast by using a brighter color value here. */
+      /* Change --accent to adjust the highlight used by contact pills and top icons. */
   html{scroll-behavior:smooth}
   /* When the root has the 'light' class, swap variable values so uses of --muted pick the light-mode contrast. */
   .light{ --muted: var(--muted-light); --panel: var(--panel-light); --text: var(--text-light); }
@@ -88,7 +86,7 @@
   /* ensure homepage thumbnails show the whole image and center it */
   /* Thumbnail images: default behavior — fill the thumb area */
   .project .thumb img{width:100%;height:100%;object-fit:contain;object-position:center;display:block}
-  /* Exception: CSA logo — make bigger so it no longer looks tiny in the thumb. If you want it full-size, increase these values. */
+  /* Exception: CSA logo — make bigger. */
   .project .thumb img[alt="Canadian Space Agency"]{width:auto;height:auto;max-width:85%;max-height:85%;margin:0 auto;display:block;object-fit:contain;background:#000}
 
   /* If a thumb is the CSA logo, make the thumb background black so the padding appears as requested. */
@@ -98,7 +96,7 @@
   .project .thumb img[alt="UBC BIoT"]{width:auto;height:auto;max-width:85%;max-height:85%;margin:0 auto;display:block;object-fit:contain;background:#fff}
   .project .thumb.thumb--biot{background:#fff}
 
-  /* Add a bit more vertical spacing under Projects and Design Teams so they're not crowded */
+  /* Add a bit more vertical spacing under Projects and Design Teams*/
   section#projects, section#design-teams{margin-bottom:88px}
     .project h3{margin:12px 0 6px}
     .project p{color:var(--muted);margin:0 0 10px}
