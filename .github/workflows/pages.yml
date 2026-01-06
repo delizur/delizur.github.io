@@ -16,6 +16,11 @@ jobs:
         with:
           lfs: true
       
+      - name: Install Git LFS and pull files
+        run: |
+          git lfs install
+          git lfs pull
+      
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
