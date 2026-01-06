@@ -46,7 +46,7 @@
   .figure-empty{width:100%;min-height:160px;border-radius:10px;background:transparent}
   .figure-wrap img{width:100%;height:100%;object-fit:contain;object-position:center;display:block}
   /* CSA logo: increase allowed size . */
-  .figure-wrap img[alt="Canadian Space Agency"]{width:auto;height:auto;max-width:85%;max-height:85%;margin:0 auto;display:block;object-fit:contain;background:#000}
+  .figure-wrap img[alt="Canadian Space Agency"]{width:auto;height:auto;max-width:95%;max-height:95%;margin:0 auto;display:block;object-fit:contain;background:#000}
   /* Make the figure container match the CSA logo background so the padding color is visually identical */
   .figure-wrap.csa{background:#000}
   @media (max-width:700px){.figure-wrap{flex-basis:100%;max-width:100%}}
@@ -95,14 +95,286 @@
       <div style="margin-bottom:8px"><a class="back-home" href="/">← Back to home</a></div>
       <h1>OASYS Project</h1>
       <p style="color:var(--muted);margin-top:6px">Levelling system for a lunar greenhouse</p>
-      <span class="tag">Machine Design</span><span class="tag">Solid Mechanics</span><span class="tag">FEA</span><span class="tag">CAD</span><span class="tag">Thermal Analysis</span>
+      <span class="tag">Machine Design</span><span class="tag">Solid Mechanics</span><span class="tag">FEA</span><span class="tag">CAD</span>
 
       <div class="gallery">
-  <div class="figure-wrap csa"><img src="/assets/OASYS%20Project/CSA%20logo.jpg" alt="Canadian Space Agency"><div class="caption" data-for="CSA logo">CSA Logo</div></div>
+  <div class="figure-wrap csa"><img src="/assets/OASYS%20Project/oasys_levelling_system.png" alt="Full OASYS System Rendering"><div class="caption" data-for="CSA logo">CSA Logo</div></div>
       </div>
 
-  <p style="color:var(--muted)">Currently working in a team of students under supervision of the Canadian Space Agency, to design a levelling system for their proposed OASYS lunar greenhouse. The OASYS initiative intends to enable sustainable food production for NASA’s Artemis Mission for lunar and Martian exploration. Our team has been tasked with designing a system for stabilizing and levelling the OASYS greenhouse that can withstand the lunar environment for a minimum of 6 weeks. The project involves CAD modelling, material selection (considering lunar temperatures, outgassing, and effects of lunar regolith), machine design of the necessary moving components, along with FEA and thermal analysis of the entire system.</p>
+  <p style="color:var(--muted)">Worked in a team of students under supervision of the Canadian Space Agency, to design a levelling system for their proposed OASYS lunar greenhouse. The OASYS initiative intends to enable sustainable food production for NASA’s Artemis Mission for lunar and Martian exploration. Our team was tasked with designing a system for stabilizing and levelling the OASYS greenhouse that can withstand the lunar environment for a minimum of 6 weeks. The project involved CAD modelling, material selection (considering lunar temperatures, outgassing, and effects of lunar regolith), machine design of the necessary moving components, along with FEA analysis of the entire system. Components for the levelling system were designed based on the Shigley analysis methods, relevant for sizing the screws, nuts, and bearings required. Materials were chosen to allow for sufficient performance within the extreme operating temperature range, and considerations were made to avoid cold-welding. The full in-depth report, along with our final presentation to the CSA can be found below.</p>
 
+      <hr style="margin:32px 0;border:none;border-top:1px solid rgba(15,23,42,.08)">
+
+      <h2 style="margin-top:24px;margin-bottom:16px">CSA Presentation</h2>
+      <p style="color:var(--muted);margin-bottom:16px">OASYS Levelling System Presentation – Presentation to the Canadian Space Agency on the levelling system design.</p>
+
+      <!-- Presentation Viewer Section -->
+      <div style="border:1px solid rgba(15,23,42,.08);border-radius:12px;padding:16px;background:var(--panel);margin-bottom:24px">
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap">
+          <button id="pres-pdf-prev" style="padding:8px 12px;border:1px solid rgba(15,23,42,.12);border-radius:8px;background:transparent;cursor:pointer;font-size:0.9rem" aria-label="Previous page">← Previous</button>
+          <span id="pres-pdf-page-info" style="color:var(--muted);font-size:0.9rem;flex:1">Page — of —</span>
+          <button id="pres-pdf-next" style="padding:8px 12px;border:1px solid rgba(15,23,42,.12);border-radius:8px;background:transparent;cursor:pointer;font-size:0.9rem" aria-label="Next page">Next →</button>
+          <a id="pres-pdf-download" href="/assets/OASYS%20Project/OASYS%20Levelling%20System%20Presentation.pdf" download style="padding:8px 12px;border:1px solid rgba(15,23,42,.12);border-radius:8px;background:transparent;cursor:pointer;font-size:0.9rem;text-decoration:none;color:inherit">⬇ Download</a>
+          <button id="pres-pdf-fullscreen" style="padding:8px 12px;border:1px solid rgba(15,23,42,.12);border-radius:8px;background:transparent;cursor:pointer;font-size:0.9rem" aria-label="Fullscreen">⛶ Fullscreen</button>
+        </div>
+        <div id="pres-pdf-container" style="border:1px solid rgba(15,23,42,.06);border-radius:8px;background:#fff;overflow:auto;max-height:600px;display:flex;justify-content:center;align-items:flex-start;padding:16px">
+          <canvas id="pres-pdf-canvas" style="display:block;max-width:100%;height:auto"></canvas>
+        </div>
+      </div>
+
+      <h2 style="margin-top:24px;margin-bottom:16px">Report</h2>
+      <p style="color:var(--muted);margin-bottom:16px">OASYS Levelling System Report – Detailed analysis and design documentation.</p>
+
+      <div style="border:1px solid rgba(15,23,42,.08);border-radius:12px;padding:16px;background:var(--panel);margin-bottom:24px">
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap">
+          <button id="report-pdf-prev" style="padding:8px 12px;border:1px solid rgba(15,23,42,.12);border-radius:8px;background:transparent;cursor:pointer;font-size:0.9rem" aria-label="Previous page">← Previous</button>
+          <span id="report-pdf-page-info" style="color:var(--muted);font-size:0.9rem;flex:1">Page — of —</span>
+          <button id="report-pdf-next" style="padding:8px 12px;border:1px solid rgba(15,23,42,.12);border-radius:8px;background:transparent;cursor:pointer;font-size:0.9rem" aria-label="Next page">Next →</button>
+          <a id="report-pdf-download" href="/assets/OASYS%20Project/MECH%20325%20Project%20Report%20-%20Group%2019.pdf" download style="padding:8px 12px;border:1px solid rgba(15,23,42,.12);border-radius:8px;background:transparent;cursor:pointer;font-size:0.9rem;text-decoration:none;color:inherit">⬇ Download</a>
+          <button id="report-pdf-fullscreen" style="padding:8px 12px;border:1px solid rgba(15,23,42,.12);border-radius:8px;background:transparent;cursor:pointer;font-size:0.9rem" aria-label="Fullscreen">⛶ Fullscreen</button>
+        </div>
+        <div id="report-pdf-container" style="border:1px solid rgba(15,23,42,.06);border-radius:8px;background:#fff;overflow:auto;max-height:600px;display:flex;justify-content:center;align-items:flex-start;padding:16px">
+          <canvas id="report-pdf-canvas" style="display:block;max-width:100%;height:auto"></canvas>
+        </div>
+      </div>
+
+      <style>
+        .oasys-pdf-corner-btn {
+          display: none;
+          position: fixed;
+          z-index: 10000;
+          background: rgba(56, 189, 248, 0.95);
+          color: #0f172a;
+          border: 2px solid rgba(56, 189, 248, 1);
+          border-radius: 8px;
+          padding: 12px 14px;
+          cursor: pointer;
+          font-size: 1.2rem;
+          font-weight: bold;
+          box-shadow: 0 4px 12px rgba(56, 189, 248, 0.4);
+        }
+        .oasys-pdf-corner-btn.visible {
+          display: block !important;
+        }
+        .oasys-pdf-corner-btn:hover {
+          background: rgba(56, 189, 248, 1);
+          box-shadow: 0 6px 16px rgba(56, 189, 248, 0.6);
+          transform: scale(1.1);
+        }
+        #report-corner-prev, #pres-corner-prev {
+          bottom: 20px;
+          left: 20px;
+        }
+        #report-corner-next, #pres-corner-next {
+          bottom: 20px;
+          right: 20px;
+        }
+        #report-pdf-container:fullscreen, #pres-pdf-container:fullscreen {
+          max-height: 100vh;
+          padding: 20px;
+        }
+        #report-pdf-fullscreen-controls, #pres-pdf-fullscreen-controls {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          background: rgba(15,23,42,0.95);
+          color: #e6eef8;
+          padding: 12px 16px;
+          z-index: 10001;
+          gap: 8px;
+          align-items: center;
+          flex-wrap: wrap;
+        }
+        #report-pdf-container:fullscreen ~ #report-pdf-fullscreen-controls,
+        #pres-pdf-container:fullscreen ~ #pres-pdf-fullscreen-controls {
+          display: flex;
+        }
+        #report-pdf-fullscreen-controls button, #pres-pdf-fullscreen-controls button {
+          padding: 8px 12px;
+          border: 1px solid rgba(230,238,248,0.2);
+          border-radius: 8px;
+          background: transparent;
+          color: #e6eef8;
+          cursor: pointer;
+          font-size: 0.9rem;
+        }
+        #report-pdf-fullscreen-controls button:hover, #pres-pdf-fullscreen-controls button:hover {
+          background: rgba(230,238,248,0.1);
+        }
+        /* Dark mode support for PDF buttons */
+        @media (prefers-color-scheme: dark) {
+          #report-pdf-prev, #report-pdf-next, #report-pdf-fullscreen, #report-pdf-download,
+          #pres-pdf-prev, #pres-pdf-next, #pres-pdf-fullscreen, #pres-pdf-download {
+            color: #e6eef8 !important;
+            border-color: rgba(230, 238, 248, 0.2) !important;
+          }
+          #report-pdf-prev:hover, #report-pdf-next:hover, #report-pdf-fullscreen:hover, #report-pdf-download:hover,
+          #pres-pdf-prev:hover, #pres-pdf-next:hover, #pres-pdf-fullscreen:hover, #pres-pdf-download:hover {
+            background: rgba(230, 238, 248, 0.1) !important;
+          }
+        }
+        html.dark #report-pdf-prev, html.dark #report-pdf-next, html.dark #report-pdf-fullscreen, html.dark #report-pdf-download,
+        html.dark #pres-pdf-prev, html.dark #pres-pdf-next, html.dark #pres-pdf-fullscreen, html.dark #pres-pdf-download {
+          color: #e6eef8 !important;
+          border-color: rgba(230, 238, 248, 0.2) !important;
+        }
+        html.dark #report-pdf-prev:hover, html.dark #report-pdf-next:hover, html.dark #report-pdf-fullscreen:hover, html.dark #report-pdf-download:hover,
+        html.dark #pres-pdf-prev:hover, html.dark #pres-pdf-next:hover, html.dark #pres-pdf-fullscreen:hover, html.dark #pres-pdf-download:hover {
+          background: rgba(230, 238, 248, 0.1) !important;
+        }
+      </style>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+      <script>
+        function initPDFViewer(containerId, canvasId, pageInfoId, prevBtnId, nextBtnId, fullscreenBtnId, cornerPrevId, cornerNextId, cornerControlsId, pdfUrl) {
+          const pdfjsLib = window['pdfjs-dist/build/pdf'];
+          pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+          
+          const canvas = document.getElementById(canvasId);
+          const ctx = canvas.getContext('2d');
+          const container = document.getElementById(containerId);
+          const pageInfo = document.getElementById(pageInfoId);
+          const prevBtn = document.getElementById(prevBtnId);
+          const nextBtn = document.getElementById(nextBtnId);
+          const fullscreenBtn = document.getElementById(fullscreenBtnId);
+          
+          let pdfDoc = null;
+          let pageNum = 1;
+          let pageCount = 0;
+          
+          function renderPage(num) {
+            pdfDoc.getPage(num).then(function(page) {
+              const viewport = page.getViewport({ scale: 2 });
+              canvas.width = viewport.width;
+              canvas.height = viewport.height;
+              
+              const renderContext = { canvasContext: ctx, viewport: viewport };
+              page.render(renderContext);
+              
+              pageInfo.textContent = 'Page ' + num + ' of ' + pageCount;
+              const fsPageInfo = document.getElementById(pageInfoId.replace('page-info', 'fullscreen-page-info'));
+              if(fsPageInfo) fsPageInfo.textContent = 'Page ' + num + ' of ' + pageCount;
+              
+              prevBtn.disabled = num <= 1;
+              nextBtn.disabled = num >= pageCount;
+            });
+          }
+          
+          function navigate(delta) {
+            if (pageNum + delta > 0 && pageNum + delta <= pageCount) {
+              pageNum += delta;
+              renderPage(pageNum);
+              if (document.fullscreenElement === container) {
+                canvas.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }
+          }
+          
+          prevBtn.addEventListener('click', function() { navigate(-1); });
+          nextBtn.addEventListener('click', function() { navigate(1); });
+          
+          fullscreenBtn.addEventListener('click', function() {
+            if (container.requestFullscreen) {
+              container.requestFullscreen().then(() => {
+                setTimeout(() => {
+                  const cornerPrev = document.getElementById(cornerPrevId);
+                  const cornerNext = document.getElementById(cornerNextId);
+                  if(cornerPrev) cornerPrev.classList.add('visible');
+                  if(cornerNext) cornerNext.classList.add('visible');
+                }, 100);
+              }).catch(err => console.error('Fullscreen error:', err));
+            }
+          });
+          
+          document.addEventListener('fullscreenchange', function() {
+            const cornerPrev = document.getElementById(cornerPrevId);
+            const cornerNext = document.getElementById(cornerNextId);
+            if (document.fullscreenElement) {
+              if(cornerPrev) cornerPrev.classList.add('visible');
+              if(cornerNext) cornerNext.classList.add('visible');
+            } else {
+              if(cornerPrev) cornerPrev.classList.remove('visible');
+              if(cornerNext) cornerNext.classList.remove('visible');
+            }
+          });
+          
+          const fsControls = document.createElement('div');
+          fsControls.id = cornerControlsId;
+          fsControls.innerHTML = `
+            <button id="${fullscreenBtnId.replace('-fullscreen', '')}-fullscreen-prev" aria-label="Previous page">← Previous</button>
+            <span id="${pageInfoId.replace('page-info', 'fullscreen-page-info')}" style="color:#e6eef8;font-size:0.9rem;flex:1">Page — of —</span>
+            <button id="${fullscreenBtnId.replace('-fullscreen', '')}-fullscreen-next" aria-label="Next page">Next →</button>
+            <button id="${fullscreenBtnId.replace('-fullscreen', '')}-fullscreen-exit" aria-label="Exit fullscreen">Exit ⛶</button>
+          `;
+          container.parentElement.insertBefore(fsControls, container.nextSibling);
+          
+          document.getElementById(fullscreenBtnId.replace('-fullscreen', '') + '-fullscreen-prev').addEventListener('click', function() { navigate(-1); });
+          document.getElementById(fullscreenBtnId.replace('-fullscreen', '') + '-fullscreen-next').addEventListener('click', function() { navigate(1); });
+          document.getElementById(fullscreenBtnId.replace('-fullscreen', '') + '-fullscreen-exit').addEventListener('click', function() {
+            if (document.fullscreenElement) {
+              document.exitFullscreen();
+            }
+          });
+          
+          document.addEventListener('keydown', function(e) {
+            if (document.fullscreenElement === container) {
+              if (e.key === 'ArrowLeft') navigate(-1);
+              if (e.key === 'ArrowRight') navigate(1);
+              if (e.key === 'Escape') document.exitFullscreen();
+            }
+          });
+          
+          pdfjsLib.getDocument(pdfUrl).promise.then(function(doc) {
+            pdfDoc = doc;
+            pageCount = doc.numPages;
+            renderPage(pageNum);
+          }).catch(function(error) {
+            console.error('Error loading PDF:', error);
+            container.innerHTML = '<p style="color:var(--muted);padding:24px">Unable to load document. You can <a href="' + pdfUrl + '">download it here</a>.</p>';
+          });
+        }
+        
+        function createCornerButtons(cornerPrevId, cornerNextId) {
+          const cornerPrev = document.createElement('button');
+          cornerPrev.id = cornerPrevId;
+          cornerPrev.className = 'oasys-pdf-corner-btn';
+          cornerPrev.setAttribute('aria-label', 'Previous page');
+          cornerPrev.textContent = '←';
+          cornerPrev.style.display = 'none';
+          document.body.appendChild(cornerPrev);
+          
+          const cornerNext = document.createElement('button');
+          cornerNext.id = cornerNextId;
+          cornerNext.className = 'oasys-pdf-corner-btn';
+          cornerNext.setAttribute('aria-label', 'Next page');
+          cornerNext.textContent = '→';
+          cornerNext.style.display = 'none';
+          document.body.appendChild(cornerNext);
+          
+          return { cornerPrev, cornerNext };
+        }
+        
+        const reportCorners = createCornerButtons('report-corner-prev', 'report-corner-next');
+        const presCorners = createCornerButtons('pres-corner-prev', 'pres-corner-next');
+        
+        reportCorners.cornerPrev.addEventListener('click', function() {
+          document.getElementById('report-pdf-prev').click();
+        });
+        reportCorners.cornerNext.addEventListener('click', function() {
+          document.getElementById('report-pdf-next').click();
+        });
+        presCorners.cornerPrev.addEventListener('click', function() {
+          document.getElementById('pres-pdf-prev').click();
+        });
+        presCorners.cornerNext.addEventListener('click', function() {
+          document.getElementById('pres-pdf-next').click();
+        });
+        
+        initPDFViewer('report-pdf-container', 'report-pdf-canvas', 'report-pdf-page-info', 'report-pdf-prev', 'report-pdf-next', 'report-pdf-fullscreen', 'report-corner-prev', 'report-corner-next', 'report-pdf-fullscreen-controls', '/assets/OASYS%20Project/MECH%20325%20Project%20Report%20-%20Group%2019.pdf');
+        initPDFViewer('pres-pdf-container', 'pres-pdf-canvas', 'pres-pdf-page-info', 'pres-pdf-prev', 'pres-pdf-next', 'pres-pdf-fullscreen', 'pres-corner-prev', 'pres-corner-next', 'pres-pdf-fullscreen-controls', '/assets/OASYS%20Project/OASYS%20Levelling%20System%20Presentation.pdf');
+      </script>
       
     </article>
   </main>
